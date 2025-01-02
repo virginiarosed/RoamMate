@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoamMate │ Admin Log In</title>
+    <link rel="stylesheet" href="rm_adminlogin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="icon.png" type="image/png">
+</head>
+<body>
+    <div class="login-form-container">
+        <form class="login-form" action="rm_adminlogin_process.php" method="POST">
+            <div class="form-header">
+                <div class="logo-container">
+                    <img src="RoamMate_logo.svg" alt="Logo" class="logo" id="roamMateLogo">
+                </div>
+                <div class="title-container">
+                    <img src="rm_admin_title.svg" alt="Admin Log In" class="title-image">
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="email" name="email" placeholder="Admin" class="input-field full-width" required>
+            </div>
+            <div class="form-group password-container">
+                <input type="password" name="password" placeholder="Password" class="input-field full-width" required>
+                <i class="fas fa-eye" id="toggleAdminLoginPassword" style="cursor: pointer;"></i>
+            </div>
+            <div class="form-group forgot-password">
+                <a href="rm_forgot_password.html" class="forgot-password-link">Forgot Password?</a>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="login-button">Log In</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('toggleAdminLoginPassword').addEventListener('click', function () {
+            const passwordInput = document.querySelector('input[name="password"]');
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.classList.toggle('fa-eye-slash');
+        });
+
+        window.addEventListener("load", function () {
+            const logo = document.getElementById("roamMateLogo");
+            logo.style.animation = "zoomOutSpin 1.5s ease-out forwards";
+        });
+    </script>
+</body>
+</html>

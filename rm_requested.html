@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoamMate│ Add Requested Itineraries</title>
+    <link rel="stylesheet" href="rm_requested.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="icon.png" type="image/png">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="logo">
+                <img src="RoamMate_logo.svg" alt="Logo" class="logo-img">
+            </div>
+            <ul class="menu">
+                <li><a href="rm_home.html"><img src="home.svg" alt="Home Icon"><span>Home</span></a></li>
+                <li><a href="rm_standard.html"><img src="standard_itinerary.svg" alt="Standard Icon" style="width: 35px; height: auto;"><span>Standard Itineraries</span></a></li>
+                <li><a href="rm_requested.html"><img src="requested_itinerary.svg" alt="Requested Itinerary Icon" style="width: 33px; height: auto;"><span>Add Requested</span></a></li>
+                <li><a href="rm_requested_record.html"><img src="requested_record.svg" alt="Requested Record Icon" style="width: 27px; height: auto;"s><span>Requested Itineraries</span></a></li>
+                <li><a href="rm_adminlogin.html"><img src="logout.svg" alt="Log Out Icon" style="width: 33px; height: auto;"><span>Log Out</span></a></li>
+            </ul>            
+        </nav>
+        <main class="content"> 
+            <img src="rm_requested_title.svg" alt="Requested Title" class="requested-img">
+
+            <div class="itinerary-container">
+                <!-- Left Part: Form -->
+                <form id="itinerary-form" method="POST" action="submit_requested_itinerary.php">
+                    <div class="itinerary-form">
+                        <h1>Add Requested Itinerary</h1>
+                        
+                        <div class="form-group">
+                            <label for="client-name">Client's Name:</label>
+                            <textarea id="client-name" name="client-name" placeholder="Enter client's name" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="destination">Destination:</label>
+                            <textarea id="destination" name="destination" placeholder="Enter destination here" required></textarea>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="start-date">Start Date:</label>
+                                <input type="date" id="start-date" name="start_date" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="end-date">End Date:</label>
+                                <input type="date" id="end-date" name="end_date" required>
+                            </div>
+                        </div>                    
+                        
+                        <div class="form-group">
+                            <label for="lodging">Lodging:</label>
+                            <textarea id="lodging" name="lodging" placeholder="Enter lodging details" required></textarea>
+                        </div>
+                        
+                        <p id="duration-text"><b>Duration:</b> 0 Days, 0 Nights</p>
+                
+                        
+                    </div>
+                </form>
+                
+                <div class="itinerary-day">
+                    <!-- Day container -->
+                    <div id="main-day-container">
+                        <!-- Dynamic day containers will be inserted here -->
+                    </div>
+            
+                    <!-- Add Button for submitting the form -->
+                    <div class="form-group">
+                        <button type="submit" class="add-itinerary-btn">Add Itinerary</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal for Success Message -->
+            <div id="modal-popup" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p id="modal-message"></p>
+                </div>
+            </div>  
+        </main>
+    </div>
+    <script src="rm_requested.js"></script>
+</body>
+</html>

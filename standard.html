@@ -1,0 +1,284 @@
+THIS IS MY rm_standard.html:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoamMate│ Standard Itineraries</title>
+    <link rel="stylesheet" href="rm_standard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="icon.png" type="image/png">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="logo">
+                <img src="RoamMate_logo.svg" alt="Logo" class="logo-img">
+            </div>
+            <ul class="menu">
+                <li><a href="rm_home.html"><img src="home.svg" alt="Home Icon"><span>Home</span></a></li>
+                <li><a href="rm_standard.html"><img src="standard_itinerary.svg" alt="Standard Icon" style="width: 35px; height: auto;"><span>Standard Itineraries</span></a></li>
+                <li><a href="rm_requested.html"><img src="requested_itinerary.svg" alt="Requested Itinerary Icon" style="width: 33px; height: auto;"><span>Add Requested</span></a></li>
+                <li><a href="rm_requested_record.html"><img src="requested_record.svg" alt="Requested Record Icon" style="width: 27px; height: auto;"s><span>Requested Itineraries</span></a></li>
+                <li><a href="rm_adminlogin.html"><img src="logout.svg" alt="Log Out Icon" style="width: 33px; height: auto;"><span>Log Out</span></a></li>
+            </ul>            
+        </nav>
+        <main class="content">
+            <img src="rm_standard_title.svg" alt="Standard Itinerary Title" class="standard-img">
+                
+            <div class="itinerary-container">
+                <!-- Left Part: Form -->
+                <div class="itinerary-form">
+                    <h1>Add Standard Itinerary</h1>
+                    
+                    <div class="form-group">
+                        <label for="destination">Destination:</label>
+                        <textarea id="destination" placeholder="Enter destination here..."></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="duration-days">Duration (Days):</label>
+                            <input type="number" id="duration-days" placeholder="No. of days" min="1">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="duration-nights">Duration (Nights):</label>
+                            <input type="number" id="duration-nights" placeholder="No. of nights" min="0">
+                        </div>
+                    </div>                    
+                    
+                    <div class="form-group">
+                        <label for="lodging">Lodging:</label>
+                        <textarea id="lodging" placeholder="Enter lodging details..."></textarea>
+                    </div>
+                    
+                    <p id="duration-text" style="color: #BC6C25;"><b>Duration:</b> 0 Days, 0 Nights</p>
+                    
+                    <div class="form-group">
+                        <button id="create-itinerary" class="create-itinerary-btn">Create Itinerary</button>
+                    </div>
+
+                    <!-- Placeholder for the generated itinerary containers -->
+                    <div id="itinerary-containers"></div>
+
+                    <!-- Add Button -->
+                    <div class="form-group">
+                        <button id="add-itinerary" class="add-itinerary-btn">Add</button>
+                    </div>
+
+                    <!-- Placeholder for the saved message -->
+                    <div id="saved-message-container"></div>
+                </div>
+            
+                <div class="itinerary-display">
+                    <h1>Added Standard Itinerary</h1>
+                    <div id="itinerary-list">
+                        <!-- Destination buttons will appear here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Function to calculate and display the duration text
+        function updateDurationText() {
+            const days = document.getElementById('duration-days').value;
+            const nights = document.getElementById('duration-nights').value;
+            const durationDisplay = document.getElementById('duration-text');
+            
+            if (days && nights >= 0) {
+                durationDisplay.textContent = `Duration: ${days} Days, ${nights} Nights`;
+            } else {
+                durationDisplay.textContent = 'Please enter valid duration.';
+            }
+        }
+
+        // Event listener for updating duration text
+        document.getElementById('duration-days').addEventListener('change', updateDurationText);
+        document.getElementById('duration-nights').addEventListener('change', updateDurationText);
+    
+        // Function to create the itinerary inputs and allow editable time slots
+        document.getElementById('create-itinerary').addEventListener('click', function() {
+            const durationDays = parseInt(document.getElementById('duration-days').value);
+            const durationNights = parseInt(document.getElementById('duration-nights').value);
+            const itineraryContainers = document.getElementById('itinerary-containers');
+    
+            if (durationDays && durationNights >= 0) {
+                itineraryContainers.innerHTML = '';  // Clear previous containers
+                
+                // Loop through each day and generate itinerary container
+                for (let i = 0; i < durationDays; i++) {
+                    const dayContainer = document.createElement('div');
+                    dayContainer.classList.add('day-container');
+                    
+                    const currentDate = new Date();
+                    currentDate.setDate(currentDate.getDate() + i);
+                    
+                    const dayOfWeek = currentDate.toLocaleString('default', { weekday: 'long' });
+                    const dateString = `Day ${i + 1}: ${currentDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} (${dayOfWeek})`;
+
+                    // Create the input fields for start and end time
+                    const timeInputHTML = ` 
+                        <div class="time-inputs">
+                            <label for="start-time-${i}">Start Time:</label>
+                            <input type="time" id="start-time-${i}" class="start-time-input" data-day="${i}">
+                            <label for="end-time-${i}">End Time:</label>
+                            <input type="time" id="end-time-${i}" class="end-time-input" data-day="${i}">
+                        </div>
+                        <button class="generate-timetable" data-day="${i}">Generate Timetable</button>
+                    `;
+                    
+                    dayContainer.innerHTML = `
+                        <h4>${dateString}</h4>
+                        ${timeInputHTML}
+                        <div class="timetable-container" id="timetable-${i}"></div>
+                    `;
+                    itineraryContainers.appendChild(dayContainer);
+                }
+            } else {
+                itineraryContainers.innerHTML = '<p class="invalid-duration-message">Please enter a valid duration.</p>';
+            }
+        });
+
+        // Event listener for enabling the "Generate Timetable" button even if no start/end time is selected
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.classList.contains('generate-timetable')) {
+                const dayIndex = e.target.getAttribute('data-day');
+                const timetableContainer = document.getElementById(`timetable-${dayIndex}`);
+                
+                const startTime = document.getElementById(`start-time-${dayIndex}`).value;
+                const endTime = document.getElementById(`end-time-${dayIndex}`).value;
+
+                if (startTime && endTime) {
+                    const start = new Date(`1970-01-01T${startTime}:00`);
+                    const end = new Date(`1970-01-01T${endTime}:00`);
+                    const duration = (end - start) / 1000 / 60;  // duration in minutes
+
+                    // Determine how many time slots (1-hour intervals)
+                    const numSlots = Math.floor(duration / 60);
+                    
+                    let timetableHTML = '';
+                    let slotStartTime = start;
+
+                    for (let j = 0; j < numSlots; j++) {
+                        const slotEndTime = new Date(slotStartTime.getTime() + 60 * 60 * 1000); // Adding 1 hour
+                        timetableHTML += `
+                            <div class="activity-input">
+                                <input type="time" value="${slotStartTime.toTimeString().slice(0, 5)}">
+                                <input type="time" value="${slotEndTime.toTimeString().slice(0, 5)}">
+                                <input type="text" placeholder="Activity">
+                            </div>
+                        `;
+                        slotStartTime = slotEndTime;
+                    }
+
+                    timetableContainer.innerHTML = timetableHTML;
+                } else {
+                    timetableContainer.innerHTML = '<p>Please select both start and end times to generate timetable.</p>';
+                }
+            }
+        });
+
+        // Event listener to add the itinerary to the list of itineraries
+        document.getElementById('add-itinerary').addEventListener('click', function() {
+            const destination = document.getElementById('destination').value;
+            const durationDays = document.getElementById('duration-days').value;
+            const durationNights = document.getElementById('duration-nights').value;
+            const lodging = document.getElementById('lodging').value;
+
+            if (destination && durationDays && durationNights && lodging) {
+                const timetableData = [];
+                const days = document.querySelectorAll('.day-container');
+
+                days.forEach((day, index) => {
+                    const timetableContainer = document.getElementById(`timetable-${index}`);
+                    const activities = timetableContainer.querySelectorAll('.activity-input');
+                    const dayTimetable = [];
+                    
+                    activities.forEach(activity => {
+                        const startTime = activity.querySelector('input[type="time"]').value;
+                        const endTime = activity.querySelectorAll('input[type="time"]')[1].value;
+                        const activityName = activity.querySelector('input[type="text"]').value;
+                        
+                        dayTimetable.push({ startTime, endTime, activity: activityName });
+                    });
+
+                    timetableData.push(dayTimetable);
+                });
+
+                // Create itinerary button
+                const itineraryList = document.getElementById('itinerary-list');
+                const itineraryButton = document.createElement('button');
+                itineraryButton.classList.add('itinerary-button');
+
+                // Add duration to button label
+                itineraryButton.textContent = `${destination} (${durationDays}D, ${durationNights}N)`;
+
+                itineraryButton.dataset.itinerary = JSON.stringify({
+                    destination,
+                    durationDays,
+                    durationNights,
+                    lodging,
+                    timetableData
+                });
+
+                // Add event listener for viewing the itinerary
+                itineraryButton.addEventListener('click', function() {
+                    const itinerary = JSON.parse(itineraryButton.dataset.itinerary);
+                    const itineraryDisplay = document.querySelector('.itinerary-display');
+
+                    let timetableHTML = '';
+                    itinerary.timetableData.forEach((dayTimetable, index) => {
+                        timetableHTML += `<h4>Day ${index + 1}</h4>`;
+                        dayTimetable.forEach(activity => {
+                            timetableHTML += `
+                                <p>${activity.startTime} - ${activity.endTime}: ${activity.activity}</p>
+                            `;
+                        });
+                    });
+
+                    itineraryDisplay.innerHTML = `
+                        <h1>${itinerary.destination}</h1>
+                        <div class="itinerary-show">
+                            <p><strong>Duration:</strong> ${itinerary.durationDays} Days, ${itinerary.durationNights} Nights</p>
+                            <p><strong>Lodging:</strong> ${itinerary.lodging}</p><br>
+                            ${timetableHTML}
+                        </div>
+                        <button id="back-button" class="back-button">Back</button>
+                    `;
+
+                    // Back button event listener
+                    document.getElementById('back-button').addEventListener('click', function() {
+                        document.querySelector('.itinerary-display').innerHTML = `
+                            <h1>Added Standard Itinerary</h1>
+                            <div id="itinerary-list"></div>
+                        `;
+                        // Rebuild the list of destination buttons
+                        const itineraryButtons = document.querySelectorAll('.itinerary-button');
+                        const itineraryList = document.getElementById('itinerary-list');
+                        itineraryButtons.forEach(button => itineraryList.appendChild(button));
+                    });
+                });
+
+                itineraryList.appendChild(itineraryButton);
+
+                // Clear form after adding itinerary
+                document.getElementById('destination').value = '';
+                document.getElementById('duration-days').value = '';
+                document.getElementById('duration-nights').value = '';
+                document.getElementById('lodging').value = '';
+
+                // Clear generated timetable
+                document.getElementById('itinerary-containers').innerHTML = ''; 
+
+                // Reset duration
+                document.getElementById('duration-text').textContent = 'Duration: 0 Days, 0 Nights';
+            } else {
+                alert('Please fill out all fields before adding the itinerary.');
+            }
+        });
+    </script>
+</body>
+</html>

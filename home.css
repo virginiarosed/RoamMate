@@ -1,0 +1,116 @@
+@font-face {
+    font-family: 'Montserrat-Regular';
+    src: url('Montserrat-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Montserrat-Medium';
+    src: url('Montserrat-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Gusto-Bold';
+    src: url('Gusto-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Montserrat-Bold';
+    src: url('Montserrat-Bold.ttf') format('truetype');
+}
+
+:root {
+    /* Add variables for navigation size */
+    --nav-icon-size: 28px; /* Default icon size */
+    --nav-text-size: 14px; /* Default text size */
+}
+
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Bottom Navigation Bar */
+.bottom-navigation {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #dda15e; /* Background color */
+    border-top: 4px solid #bc6c25; /* Optional border at the top */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for elevation */
+}
+
+.nav-items {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    list-style: none;
+}
+
+.nav-item {
+    text-align: center;
+    flex: 1; /* Distribute items evenly */
+}
+
+.nav-item a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #fafae0; /* Text color */
+    font-size: var(--nav-text-size); /* Use the variable for text size */
+    font-family: 'Montserrat-Medium', sans-serif;
+    transition: color 0.3s ease;
+}
+
+.nav-item a:hover {
+    color: #fafae0; /* Hover effect color */
+}
+
+.nav-icon {
+    width: var(--nav-icon-size); /* Use the variable for icon size */
+    height: var(--nav-icon-size);
+    margin-bottom: 5px; /* Spacing between icon and text */
+}
+
+/* Top Logo Styling */
+.top-logo {
+    display: flex; /* Use flexbox for centering */
+    justify-content: center; /* Horizontally center the logo */
+    align-items: center; /* Vertically align (optional if needed) */
+    text-align: center; /* Center the logo text, if any */
+    width: 100%; /* Ensure it spans the full width of the screen */
+    margin-top: 15px;
+}
+
+.top-logo .logo {
+    width: 100px; /* Adjust logo size */
+    height: auto; /* Maintain aspect ratio */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    :root {
+        --nav-icon-size: 24px; /* Smaller icon size for mobile */
+        --nav-text-size: 12px; /* Smaller text size for mobile */
+    }
+
+    .nav-items {
+        padding: 5px;
+    }
+
+    .logo {
+        width: 50px; /* Adjust the logo size for smaller screens */
+        height: 50px;
+    }
+}

@@ -1,0 +1,270 @@
+@font-face {
+    font-family: 'Montserrat-Regular';
+    src: url('Montserrat-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Montserrat-Medium';
+    src: url('Montserrat-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Gusto-Bold';
+    src: url('Gusto-Bold.ttf') format('truetype');
+}
+
+/* Body styles */
+body {
+    font-family: 'Montserrat-Regular', sans-serif;
+    background-image: url('rm_contentbg.svg');
+    background-color: #fafae0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.login-form-container {
+    background: #fafae0;
+    padding: 20px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 400px;
+    border: 8px solid #bc6c25;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.logo-container {
+    margin-bottom: 10px;
+}
+
+.logo {
+    max-width: 100px;
+}
+
+.forgot-logo-container {
+    text-align: center; /* Centers the logo horizontally */
+    margin-bottom: 1px; /* Adds some space below the logo */
+}
+
+/* Style for the logo image */
+.forgot_logo {
+    max-width: 100%; /* Ensures the logo image is responsive and doesn't overflow its container */
+    height: auto; /* Maintains the aspect ratio */
+    width: 100px; /* You can adjust the width based on your design */
+    animation: fadeInLogo 1s ease-out; /* Adds a fade-in animation */
+}
+
+.title-container {
+    text-align: center;
+}
+
+.title-image {
+    max-width: 80%;
+    height: auto;
+    object-fit: contain;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+input[type="email"], input[type="password"] {
+    font-family: 'Montserrat-Regular', sans-serif;
+    padding: 10px;
+    border: 3px solid #bc6c25;
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.input-field:hover,
+.input-field:focus {
+    border: 3px solid #dda15e;
+    outline: none;
+}
+
+.input-field::placeholder {
+    font-family: 'Montserrat-Regular', sans-serif;
+}
+
+.login-button {
+    padding: 10px;
+    background-color: #bc6c25;
+    color: white;
+    font-family: 'Montserrat-Medium', sans-serif;
+    font-size: 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 30%;
+    margin: 0 auto; /* Centers the button horizontally */
+    margin-bottom: -15px;
+}
+
+.login-button:hover {
+    color: #fafae0;
+    background: #dda15e;
+}
+
+.signup-text {
+    color: #2B2414;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.signup-text a {
+    color: #bc6c25;
+    text-decoration: none;
+    font-weight: bolder;
+}
+
+.signup-text a:hover {
+    text-decoration: underline;
+}
+
+.password-container {
+    position: relative;
+    width: 100%; /* Full width within the container */
+}
+
+.password-container input {
+    width: 100%; /* Full width for input */
+    padding-right: 30px; /* Add padding for the icon */
+}
+
+.password-container i {
+    position: absolute;
+    right: 10px; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    color: #bc6c25; 
+    font-size: 1rem;
+    cursor: pointer; 
+}
+
+.forgot-password {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.forgot-password-link {
+    color: #bc6c25; 
+    font-size: 14px;
+    text-decoration: none;
+    font-family: 'Montserrat-Regular', sans-serif;
+}
+
+.forgot-password-link:hover {
+    text-decoration: underline;
+    color: #dda15e;
+}
+
+.send-button {
+    padding: 10px;
+    background-color: #bc6c25;
+    color: white;
+    font-family: 'Montserrat-Medium', sans-serif;
+    font-size: 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 40%;
+    margin: 0 auto; /* Centers the button horizontally */
+    margin-top: 5px;
+    margin-bottom: -15px;
+}
+
+.send-button:hover {
+    color: #fafae0;
+    background: #dda15e;
+}
+
+.forgot {
+    display: block;
+    margin: 10px auto 20px auto; /* Centers the image and adds margin below */
+    max-width: 90%; /* Ensures the image doesn't exceed container width */
+    height: auto; /* Maintains aspect ratio */
+}
+
+.reset {
+    display: block;
+    margin: 10px auto 23px auto; /* Centers the image and adds margin below */
+    max-width: 87%; /* Ensures the image doesn't exceed container width */
+    height: auto; /* Maintains aspect ratio */
+}
+
+.reset-button {
+    padding: 10px;
+    background-color: #bc6c25;
+    color: white;
+    font-family: 'Montserrat-Medium', sans-serif;
+    font-size: 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 40%;
+    margin: 0 auto; /* Centers the button horizontally */
+    margin-top: 20px;
+    margin-bottom: 5px;
+    display: block; /* Ensures margin auto works */
+}
+
+.reset-button:hover {
+    color: #fafae0;
+    background: #dda15e;
+}
+
+
+/* Animation for the logo */
+@keyframes zoomOutSpin {
+    0% {
+        transform: scale(2) rotate(0deg); /* Start zoomed-in and no rotation */
+        opacity: 0;
+    }
+    50% {
+        opacity: 1; 
+    }
+    100% {
+        transform: scale(1) rotate(360deg); 
+        opacity: 1; 
+    }
+}
+
+/* Apply animation to the logo */
+.logo {
+    animation: zoomOutSpin 2s ease-out; 
+    animation-fill-mode: forwards;
+}
+
+
+@media (max-width: 600px) {
+    .form-header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .form-group {
+        width: 100%;
+    }
+
+    .login-form-container {
+        max-width: 80%; /* Utilize more screen space */
+    }
+}
