@@ -244,13 +244,13 @@ header .navbar {
 
 /* About section styling */
 .about-section {
-  padding: 120px 0;
+  padding: 50px 0;
   background: #DDA15E;
 }
 
 .about-section .section-content {
   display: flex;
-  gap: 50px;
+  gap: 20px;
   align-items: center;
   justify-content: space-between;
 }
@@ -279,26 +279,11 @@ header .navbar {
   color: #fafae0;
 }
 
-.about-section .social-link-list {
-  display: flex;
-  gap: 25px;
-  justify-content: center;
-}
-
-.about-section .social-link-list .social-link {
-  color: var(--primary-color);
-  font-size: var(--font-size-l);
-  transition: 0.2s ease;
-}
-
-.about-section .social-link-list .social-link:hover {
-  color: var(--secondary-color);
-}
-
 /* Testimonials section styling */
 .team-section {
   padding: 50px 0 100px;
   background: #DDA15E;
+  margin-top: -100px;
 }
 
 .team-section .slider-wrapper {
@@ -318,11 +303,12 @@ header .navbar {
 
 .team-section h2 {
   color: #fafae0;
+  margin-bottom: -80px;
 }
 
 .team-section .team .team-image {
-  width: 180px;
-  height: 180px;
+  width: 200px;
+  height: 200px;
   margin-bottom: 50px;
   object-fit: cover;
   border-radius: var(--border-radius-circle);

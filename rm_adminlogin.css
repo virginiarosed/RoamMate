@@ -94,6 +94,15 @@ input[type="email"], input[type="password"] {
     box-sizing: border-box;
 }
 
+.revealed-password {
+    font-family: 'Montserrat-Regular', sans-serif;
+    padding: 10px;
+    border: 3px solid #bc6c25;
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
 .input-field:hover,
 .input-field:focus {
     border: 3px solid #dda15e;
@@ -267,4 +276,19 @@ input[type="email"], input[type="password"] {
     .login-form-container {
         max-width: 80%; /* Utilize more screen space */
     }
+}
+
+/* Style for error messages */
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-family: 'Montserrat-Medium', sans-serif;
+}
+
+#countdown-timer {
+    font-size: 14px;
+    color: red;
+    font-family: 'Montserrat-Medium', sans-serif;
 }

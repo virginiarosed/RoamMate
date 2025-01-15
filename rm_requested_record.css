@@ -288,3 +288,38 @@ tr:nth-child(even) {
 tr:hover {
     background-color: #ddd;
 }
+
+.menu li.active {
+    background-color: #FFF0D9;
+    border-radius: 8px;
+    outline: 2px solid #BC6C25;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    font-size: 10px;
+    transform: scale(1.1);
+    padding: 5px;
+}
+
+.menu li.active span {
+    color: #BC6C25; 
+    font-size: 12px;
+}
+
+.menu li.active img {
+    filter: brightness(1.2); 
+    max-width: 30px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+    margin-bottom: 5px; /* Keep consistent spacing */
+}
+
+.menu li:hover {
+    background-color: #dda25e9f; 
+    transition: background-color 0.3s ease;
+    border-radius: 8px;
+}
+
+.menu li:focus-within {
+    outline: 2px solid #BC6C25; 
+    background-color: #dda25e9f; 
+    border-radius: 8px;
+    border-radius: 8px;
+}
