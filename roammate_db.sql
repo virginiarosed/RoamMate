@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 16, 2025 at 04:27 PM
+-- Generation Time: Jan 16, 2025 at 05:24 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,9 +43,9 @@ CREATE TABLE `admin_users` (
 --
 
 INSERT INTO `admin_users` (`id`, `email`, `password`, `created_at`, `company`, `failed_attempts`, `last_failed_attempt`, `lockout_expiry`) VALUES
-(1, 'virginiarosedichoso@gmail.com', '36a9e7f1c95b82ffb99743e0c5c4ce95d83c9a430aac59f84ef3cbfab6145068', '2024-12-21 19:50:05', 'Virginia Dichoso', 0, '2025-01-10 19:34:59', NULL),
-(2, 'tonystark@gmail.com', 'b3a8e0e1f9ab1bfe3a36f231f676f78bb30a519d2b21e6c530c0eee8ebb4a5d0', '2025-01-07 21:02:07', NULL, 3, '2025-01-08 06:16:29', '2025-01-07 23:21:29'),
-(3, 'steverogers@gmail.com', 'b3a8e0e1f9ab1bfe3a36f231f676f78bb30a519d2b21e6c530c0eee8ebb4a5d0', '2025-01-07 21:16:38', NULL, 4, '2025-01-10 17:46:32', '2025-01-10 10:51:32'),
+(1, 'virginiarosedichoso@gmail.com', '39e4ce7fd42a054531e6148b7e691c7ecb95d12ef0c0d5799a0420ebf0fd1f22', '2024-12-21 19:50:05', 'Virginia Dichoso', 0, '2025-01-17 00:12:00', NULL),
+(2, 'tonystark@gmail.com', 'b3a8e0e1f9ab1bfe3a36f231f676f78bb30a519d2b21e6c530c0eee8ebb4a5d0', '2025-01-07 21:02:07', NULL, 4, '2025-01-17 00:13:24', '2025-01-16 17:18:24'),
+(3, 'steverogers@gmail.com', 'b3a8e0e1f9ab1bfe3a36f231f676f78bb30a519d2b21e6c530c0eee8ebb4a5d0', '2025-01-07 21:16:38', NULL, 5, '2025-01-17 00:14:11', '2025-01-16 17:19:11'),
 (4, 'thorodinson@gmail.com', 'b3a8e0e1f9ab1bfe3a36f231f676f78bb30a519d2b21e6c530c0eee8ebb4a5d0', '2025-01-07 21:23:04', NULL, 3, '2025-01-08 05:23:56', NULL),
 (5, 'brucebanner@gmail.com', 'b3a8e0e1f9ab1bfe3a36f231f676f78bb30a519d2b21e6c530c0eee8ebb4a5d0', '2025-01-07 21:28:08', NULL, 4, '2025-01-10 17:47:21', '2025-01-10 10:52:21'),
 (6, 'clintbarton@gmail.com', 'b3a8e0e1f9ab1bfe3a36f231f676f78bb30a519d2b21e6c530c0eee8ebb4a5d0', '2025-01-07 21:35:16', NULL, 3, '2025-01-08 05:36:36', '2025-01-07 22:41:36');
@@ -131,10 +131,12 @@ INSERT INTO `password_resets` (`email`, `token`, `expires`) VALUES
 ('virginiarosedichoso@gmail.com', '30ab467e1785098a08438e8fe02aa9ff1a8a0a31e58bc8a798d2875fe81c3196af7ff81d2c6c3e687fdc216c319d09ea94e6', 1734828665),
 ('virginiarosedichoso@gmail.com', '3f42991e800629bef7a4270ebfceda455259b13cca8b1f01123db1307c664165dea7e42e883232d4bc205ef526726eefe2a8', 1736283590),
 ('virginiarosedichoso@gmail.com', '502f0c093a015be0d7d07ba82a1e27d3631e6a9f014fe264c8e09152229922c509e58ac584fedf4c47a54522a7f525f779eb', 1734822209),
+('virginiarosedichoso@gmail.com', '5bd64bdde212b625f3d0ebbee1326d75193dcc3c1b2bf0fb4a1f81e8b01adbdeb04b4a8792937b49b9d43b94d9bb960b5311', 1737047866),
 ('virginiarosedichoso@gmail.com', '7f08ddb2a868db63b534b6d2cb5f6df08f956d1b717b2a4bebda5b4ddcfae865b2a2b1186bd8e4baf97a57a80b2b6de0a76e', 1734826727),
 ('virginiarosedichoso@gmail.com', '8e7e76333a0926f908b831ae80ea8ad468d5a8e03128f03fc3a2c049e66c4d9e626cb3b43c427a39b56224ffaa2d17b41415', 1734820636),
 ('virginiarosedichoso@gmail.com', '9af28bc82baf6a416305adf1464b0dde1dac5c49cbbe935baa43c2ae8c098b7d6ec8436daf1f70cc4e6724b4fd4de4eed134', 1734823550),
 ('virginiarosedichoso@gmail.com', '9c09644802f1c913d891f1d107fb483ed0a3e0bae5c846f475dbe028d3a83e1ee58b31a15c6ce837736d0164277769f2f736', 1734823287),
+('virginiarosedichoso@gmail.com', 'a325c43e267e9b7bfe5a5c5b3731616726ed55cc57ac5e12d403e79d08e5d5879122c57b26d11d334585bc1d83b32bdc6dc4', 1737047955),
 ('virginiarosedichoso@gmail.com', 'ae151950dbef11ab033dfabb61333ec3150b33570e4a2fdbbc001390a090dcc76e14eb42ae1aa1286b1cdd03b027f800d2a7', 1734827457),
 ('virginiarosedichoso@gmail.com', 'd9eb9678aeaf72e88c46652819d36e3592dff808ff771c3567c1c5dda07bfb35ed6dd6dc74ee78dff4f19f9e5c6a52496ab4', 1736283921),
 ('virginiarosedichoso@gmail.com', 'dc415448df8b8a725633daa9274a51d3133105a22d5e0cd5d10eb180810b909311ffec698eace4ee08b248ac8f7dc6fdf881', 1734823992),
