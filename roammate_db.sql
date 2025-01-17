@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 16, 2025 at 05:24 PM
+-- Generation Time: Jan 17, 2025 at 12:09 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -32,23 +32,28 @@ CREATE TABLE `admin_users` (
   `email` varchar(255) NOT NULL,
   `password` char(64) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `company` varchar(255) DEFAULT NULL,
   `failed_attempts` int(11) DEFAULT 0,
   `last_failed_attempt` datetime DEFAULT NULL,
-  `lockout_expiry` datetime DEFAULT NULL
+  `lockout_expiry` datetime DEFAULT NULL,
+  `company_code` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin_users`
 --
 
-INSERT INTO `admin_users` (`id`, `email`, `password`, `created_at`, `company`, `failed_attempts`, `last_failed_attempt`, `lockout_expiry`) VALUES
-(1, 'virginiarosedichoso@gmail.com', '39e4ce7fd42a054531e6148b7e691c7ecb95d12ef0c0d5799a0420ebf0fd1f22', '2024-12-21 19:50:05', 'Virginia Dichoso', 0, '2025-01-17 00:12:00', NULL),
-(2, 'tonystark@gmail.com', 'b3a8e0e1f9ab1bfe3a36f231f676f78bb30a519d2b21e6c530c0eee8ebb4a5d0', '2025-01-07 21:02:07', NULL, 4, '2025-01-17 00:13:24', '2025-01-16 17:18:24'),
-(3, 'steverogers@gmail.com', 'b3a8e0e1f9ab1bfe3a36f231f676f78bb30a519d2b21e6c530c0eee8ebb4a5d0', '2025-01-07 21:16:38', NULL, 5, '2025-01-17 00:14:11', '2025-01-16 17:19:11'),
-(4, 'thorodinson@gmail.com', 'b3a8e0e1f9ab1bfe3a36f231f676f78bb30a519d2b21e6c530c0eee8ebb4a5d0', '2025-01-07 21:23:04', NULL, 3, '2025-01-08 05:23:56', NULL),
-(5, 'brucebanner@gmail.com', 'b3a8e0e1f9ab1bfe3a36f231f676f78bb30a519d2b21e6c530c0eee8ebb4a5d0', '2025-01-07 21:28:08', NULL, 4, '2025-01-10 17:47:21', '2025-01-10 10:52:21'),
-(6, 'clintbarton@gmail.com', 'b3a8e0e1f9ab1bfe3a36f231f676f78bb30a519d2b21e6c530c0eee8ebb4a5d0', '2025-01-07 21:35:16', NULL, 3, '2025-01-08 05:36:36', '2025-01-07 22:41:36');
+INSERT INTO `admin_users` (`id`, `email`, `password`, `created_at`, `failed_attempts`, `last_failed_attempt`, `lockout_expiry`, `company_code`) VALUES
+(1, 'virginiarosedichoso@gmail.com', '39e4ce7fd42a054531e6148b7e691c7ecb95d12ef0c0d5799a0420ebf0fd1f22', '2024-12-21 19:50:05', 0, '2025-01-17 00:12:00', NULL, ''),
+(2, 'tonystark@gmail.com', 'b3a8e0e1f9ab1bfe3a36f231f676f78bb30a519d2b21e6c530c0eee8ebb4a5d0', '2025-01-07 21:02:07', 4, '2025-01-17 00:13:24', '2025-01-16 17:18:24', ''),
+(3, 'steverogers@gmail.com', 'b3a8e0e1f9ab1bfe3a36f231f676f78bb30a519d2b21e6c530c0eee8ebb4a5d0', '2025-01-07 21:16:38', 5, '2025-01-17 00:14:11', '2025-01-16 17:19:11', ''),
+(4, 'thorodinson@gmail.com', 'b3a8e0e1f9ab1bfe3a36f231f676f78bb30a519d2b21e6c530c0eee8ebb4a5d0', '2025-01-07 21:23:04', 3, '2025-01-08 05:23:56', NULL, ''),
+(5, 'brucebanner@gmail.com', 'b3a8e0e1f9ab1bfe3a36f231f676f78bb30a519d2b21e6c530c0eee8ebb4a5d0', '2025-01-07 21:28:08', 4, '2025-01-10 17:47:21', '2025-01-10 10:52:21', ''),
+(6, 'clintbarton@gmail.com', 'b3a8e0e1f9ab1bfe3a36f231f676f78bb30a519d2b21e6c530c0eee8ebb4a5d0', '2025-01-07 21:35:16', 3, '2025-01-08 05:36:36', '2025-01-07 22:41:36', ''),
+(7, 'natasha@gmail.com', '$2y$10$xJbAxfUlXkqqgD/.MoMnluDgLQKrB9vuP8lF4N8k.LJjItWvLiFO6', '2025-01-17 10:53:37', 0, NULL, NULL, '4B-TRVL-ND-TRS'),
+(8, 'anna@gmail.com', '$2y$10$xzV3ulWO/mT/FGiGy.MunOELMPj.EB8no6dVBfaj04bPbaQ3tudPm', '2025-01-17 10:54:46', 0, NULL, NULL, '4B-TRVL-ND-TRS'),
+(9, 'may@gmail.com', '$2y$10$IkrsPmlyWemm/Qbm1FCDSOXMlY3NMmhM.E6IogBfpPcoO8iRV5uli', '2025-01-17 10:56:14', 0, NULL, NULL, '4B-TRVL-ND-TRS'),
+(10, 'belle@gmail.com', '$2y$10$fqee/9mCBVL/axxJw2ERFOqexaE33dFqufkls0OqgcCJMkY7a/10.', '2025-01-17 11:00:21', 0, NULL, NULL, '4B-TRVL-ND-TRS'),
+(11, 'aurora@gmail.com', '$2y$10$3tTYTEiuZ1xVP0vToTa/yubh4qZuuQDlr.vAnWFqIe6uB9yCqPwW2', '2025-01-17 11:04:58', 1, '2025-01-17 19:05:18', NULL, '4B-TRVL-ND-TRS');
 
 -- --------------------------------------------------------
 
@@ -244,7 +249,7 @@ ALTER TABLE `requested_itinerary_days`
 -- AUTO_INCREMENT for table `admin_users`
 --
 ALTER TABLE `admin_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `itineraries`
