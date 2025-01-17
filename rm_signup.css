@@ -1,0 +1,426 @@
+@font-face {
+    font-family: 'Montserrat-Regular';
+    src: url('Montserrat-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Gusto-Bold';
+    src: url('Gusto-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Montserrat-Medium';
+    src: url('Montserrat-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Montserrat-Bold';
+    src: url('Montserrat-Bold.ttf') format('truetype');
+}
+
+body {
+    font-family: 'Montserrat-Regular', sans-serif;
+    background-image: url('rm_contentbg.svg');
+    background-color: #fafae0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.signup-form-container {
+    background: #fafae0;
+    padding: 30px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 450px;
+    border: 8px solid #bc6c25;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.signup-form-container.widened {
+    width: 100%;
+    max-width: 1000px;
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-header {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.logo-container {
+    flex: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    max-width: 90px;
+}
+
+.title-container {
+    flex: 75%;
+    display: flex;
+}
+
+.title-image {
+    max-width: 100%;
+    height: auto;
+
+    
+    object-fit: contain; 
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.form-group.row {
+    display: flex;
+    gap: 10px;
+}
+
+
+.email-group {
+    position: relative; 
+}
+
+.email-icon {
+    position: absolute;
+    top: 50%; 
+    left: 425px; 
+    transform: translateY(-50%); 
+    pointer-events: none; 
+    color: #bc6c25;
+    font-size: 15px;
+}
+
+.input-field {
+    padding-left: 30px; 
+    width: 100%;
+    font-family: 'Montserrat-Regular', sans-serif;
+}
+
+.input-field {
+    padding: 10px;
+    border: 3px solid #bc6c25;
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.half-width {
+    width: calc(50% - 5px);
+}
+
+.full-width {
+    width: 100%;
+}
+
+.input-field:hover,
+.input-field:focus {
+    border: 3px solid #A3C585;
+    outline: none;
+}
+
+.input-field::placeholder {
+    font-family: 'Montserrat-Regular', sans-serif;
+}
+
+.signup-button {
+    padding: 10px;
+    background-color: #bc6c25;
+    color: white;
+    font-family: 'Montserrat-Medium', sans-serif;
+    font-size: 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 30%;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+    margin-bottom: -15px;
+}
+
+.signup-button:hover {
+    background-color: #A3C585;
+    outline: none;
+}
+
+.login-text {
+    color: #bc6c25;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.login-text a {
+    color: #bc6c25;
+    text-decoration: none;
+    font-weight: bolder;
+}
+
+.login-text a:hover {
+    text-decoration: underline;
+}
+
+.password-container {
+    position: relative;
+    width: 100%;
+}
+
+.password-container input {
+    width: 100%; 
+    padding-right: 30px; 
+}
+
+.password-container i {
+    position: absolute;
+    right: 10px; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    color: #bc6c25; 
+    font-size: 1rem; 
+    cursor: pointer; 
+}
+
+.password-requirements p {
+    margin-bottom: -10px;
+    margin-top: -10px;
+    font-family: 'Montserrat-Medium', sans-serif;
+    font-size: 13px;
+    color: #bc6c25;
+}
+
+.requirement-list li.valid {
+    color: #bc6c25;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.requirement-list li i {
+    color: red;
+    margin-right: 8px; 
+    font-size: 8px;
+}
+
+.requirement-list li.valid i {
+    color: #585D27;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.requirement-list {
+    list-style-type: none; 
+    padding-left: 0; 
+    font-family: 'Montserrat-Regular', sans-serif;
+    font-size: 12px;
+}
+
+.requirement-list li {
+    display: flex; 
+    align-items: center; 
+    color: #575757;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    text-align: left;
+    font-size: 14px;
+    color: #585D27;
+}
+
+.recaptcha-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+
+input[type="date"] {
+    font-family: 'Montserrat-Regular', sans-serif; 
+}
+
+.success-container {
+    text-align: center;
+    padding: 30px;
+    background-color: #FFF0D9;
+    border: 8px solid #585D27;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 100px auto;
+}
+
+.success-container h1 {
+    font-family: 'Gusto-Bold', sans-serif;
+    color: #585D27;
+    font-size: 55px;
+    margin-bottom: -5px;
+}
+
+.success-container p {
+    font-family: 'Montserrat-Medium', sans-serif;
+    font-size: 18px;
+    color: #585D27;
+}
+
+.login-button {
+    padding: 10px 20px;
+    background-color: #585D27;
+    color: white;
+    font-family: 'Montserrat-Medium', sans-serif;
+    font-size: 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.login-button:hover {
+    background-color: #A3C585
+}
+
+
+@media only screen and (max-width: 480px) {
+    body, html {
+        overflow-x: hidden;  
+    }
+
+    .signup-form-container {
+        max-width: 100vw; 
+        overflow: hidden;  
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .signup-form-container {
+        width: 70%;
+    }
+
+    .signup-button {
+        width: 60%;
+    }
+
+    .next-button, .back-button {
+        width: 60%;
+    }
+
+    .left-section h1 {
+        font-size: 40px;
+    }
+
+    .left-section p {
+        font-size: 14px;
+    }
+
+    .logo {
+        max-width: 50px;
+    }
+
+    .title-image {
+        margin-left: 0;
+    }
+
+    .input-field {
+        font-size: 14px;
+    }
+
+    .password-container i {
+        font-size: 0.9rem;
+    }
+
+    .form-group {
+        font-size: 14px;
+    }
+
+    .success-container h1 {
+        font-size: 40px;
+    }
+
+    .success-container p {
+        font-size: 16px;
+    }
+
+    .form-header {
+        display: flex;
+        flex-direction: column; 
+        align-items: center;  
+    }
+
+    .logo-container {
+        order: 1; 
+    }
+
+    .logo {
+        max-width: 100px; 
+        height: auto;  
+    }
+
+    .title-image {
+        max-width: 300px; 
+        height: auto;
+    }
+
+    .title-container {
+        order: 2; 
+        text-align: center; 
+    }
+
+    .password-requirements p, 
+    .requirement-list li {   
+        font-size: 10px;  
+    }
+
+    .form-group {
+        margin-bottom: 5px; 
+    }
+
+    input, select, textarea {
+        margin-bottom: 7px; 
+    }
+
+    .email-group {
+        position: relative; 
+    }
+
+    .email-icon {
+        position: absolute;
+        top: 45%;
+        left: 265px; 
+        transform: translateY(-50%); 
+        pointer-events: none; 
+        color: #585D27;
+        font-size: 14px; 
+    }
+
+    .password-container i {
+        right: 10px; 
+        top: 23px;
+        font-size: 16px; 
+    }
+}
+
+#birthday-error {
+    color: red;
+    display: none;
+    font-size: 15px;
+    text-align: center;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
