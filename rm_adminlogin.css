@@ -292,3 +292,19 @@ input[type="email"], input[type="password"] {
     color: red;
     font-family: 'Montserrat-Medium', sans-serif;
 }
+
+.signup-text {
+    color: #bc6c25;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.signup-text a {
+    color: #bc6c25;
+    text-decoration: none;
+    font-weight: bolder;
+}
+
+.signup-text a:hover {
+    text-decoration: underline;
+}

@@ -129,7 +129,7 @@ body {
 
 .input-field:hover,
 .input-field:focus {
-    border: 3px solid #A3C585;
+    border: 3px solid #dda15e;
     outline: none;
 }
 
@@ -154,7 +154,7 @@ body {
 }
 
 .signup-button:hover {
-    background-color: #A3C585;
+    background-color: #dda15e;
     outline: none;
 }
 
@@ -239,7 +239,7 @@ body {
     font-weight: bold;
     text-align: left;
     font-size: 14px;
-    color: #585D27;
+    color: #bc6c25;
 }
 
 .recaptcha-container {
@@ -256,7 +256,7 @@ input[type="date"] {
     text-align: center;
     padding: 30px;
     background-color: #FFF0D9;
-    border: 8px solid #585D27;
+    border: 8px solid #bc6c25;
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     max-width: 500px;
@@ -265,7 +265,7 @@ input[type="date"] {
 
 .success-container h1 {
     font-family: 'Gusto-Bold', sans-serif;
-    color: #585D27;
+    color: #bc6c25;
     font-size: 55px;
     margin-bottom: -5px;
 }
@@ -273,12 +273,12 @@ input[type="date"] {
 .success-container p {
     font-family: 'Montserrat-Medium', sans-serif;
     font-size: 18px;
-    color: #585D27;
+    color: #bc6c25;
 }
 
 .login-button {
     padding: 10px 20px;
-    background-color: #585D27;
+    background-color: #bc6c25;
     color: white;
     font-family: 'Montserrat-Medium', sans-serif;
     font-size: 15px;
@@ -291,7 +291,7 @@ input[type="date"] {
 }
 
 .login-button:hover {
-    background-color: #A3C585
+    background-color: #dda15e;
 }
 
 
@@ -405,7 +405,7 @@ input[type="date"] {
         left: 265px; 
         transform: translateY(-50%); 
         pointer-events: none; 
-        color: #585D27;
+        color: #bc6c25;
         font-size: 14px; 
     }
 

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoamMate │ Admin Sign Up</title>
+    <link rel="stylesheet" href="rm_signup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="icon.png" type="image/png">
+</head>
+<body>
+    <div class="signup-form-container">
+        <form class="signup-form" action="rm_signup_process.php" method="POST">
+            <div id="initial-questions">
+                
+                <div class="form-header">
+                    <div class="logo-container">
+                        <img src="RoamMate_logo.svg" alt="Logo" class="logo">
+                    </div>
+                    <div class="title-container">
+                        <img src="rm_create_title.svg" alt="Create an Account" class="title-image">
+                    </div>
+                </div>
+    
+                <div class="form-group email-group">
+                    <input type="email" name="email" id="email" placeholder="Email" class="input-field full-width" required>
+                    <i class="fas fa-envelope email-icon"></i>
+                </div>
+                                
+                <div class="form-group row">
+                    <div class="password-container">
+                        <input type="password" name="password" id="password" placeholder="Password" class="input-field half-width" required>
+                        <i class="fas fa-eye" id="togglePassword" style="cursor: pointer;"></i>
+                    </div>
+                    <div class="password-container">
+                        <input type="password" name="password_confirmation" placeholder="Confirm Password" id="password_confirmation" class="input-field half-width" required>
+                        <i class="fas fa-eye" id="togglePasswordConfirmation" style="cursor: pointer;"></i>
+                    </div>                   
+                </div>
+                <div id="password-requirements" class="password-requirements" style="display: none;">
+                    <p>Password must contain:</p>
+                    <ul class="requirement-list">
+                        <li>
+                            <i class="fa-solid fa-circle"></i>
+                            <span>At least 8 characters length</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-circle"></i>
+                            <span>At least 1 number (0-9)</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-circle"></i>
+                            <span>At least 1 lowercase letter (a-z)</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-circle"></i>
+                            <span>At least 1 special symbol (!, $, etc.)</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-circle"></i>
+                            <span>At least 1 uppercase letter (A-Z)</span>
+                        </li>
+                    </ul>
+                    </div>
+                    <div class="form-group">
+                        <input
+                            type="text"
+                            id="company-code"
+                            name="company_code"
+                            class="input-field full-width"
+                            placeholder="Enter Company Code"
+                            required
+                        />
+                    </div>
+
+                <div id="company-code-error" style="color: red; display: none; font-size: 15px; text-align: center; margin: 0 auto; margin-bottom: 10px;">
+                    <p>Invalid company code.</p>
+                </div>
+                <div id="password-error" style="color: red; display: none; font-size: 15px; text-align: center; margin: 0 auto; margin-bottom: -10px;">
+                    <p>Passwords do not match</p>
+                </div>         
+                <div id="email-error" style="color: red; display: none; font-size: 15px; text-align: center; margin: 0 auto; margin-bottom: 10px;">
+                    <p>This email is already in use. Please choose another one.</p>
+                </div>
+                <button type="submit" class="signup-button">Sign Up</button>                 
+                <p class="login-text">Already have an account? <a href="rm_adminlogin.html">Log In</a></p>
+            </div>
+        </form>
+    </div>
+
+    <script src="rm_signup.js"></script>
+</body>
+</html>

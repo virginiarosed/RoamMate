@@ -21,7 +21,7 @@ $maxAttempts = 3;
 $lockoutTime = 5; // 5 minutes (no need to multiply by 60)
 
 // Query to check login attempts and lockout expiry time
-$sql = "SELECT failed_attempts, last_failed_attempt, lockout_expiry FROM admin_users WHERE email = ?";
+$sql = "SELECT failed_attempts, last_failed_attempt, lockout_expiry, password FROM admin_users WHERE email = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $email);
 $stmt->execute();
@@ -41,14 +41,8 @@ if ($result->num_rows === 1) {
         exit();
     }
 
-    // Query to check credentials
-    $sql = "SELECT * FROM admin_users WHERE email = ? AND password = SHA2(?, 256)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $email, $password);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
+    // Check password using password_verify() instead of SHA2
+    if (password_verify($password, $user['password'])) {
         // Reset failed attempts and lockout expiry on successful login
         $sql = "UPDATE admin_users SET failed_attempts = 0, lockout_expiry = NULL WHERE email = ?";
         $stmt = $conn->prepare($sql);
