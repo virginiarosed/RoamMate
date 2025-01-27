@@ -9,6 +9,32 @@
     <link rel="icon" href="icon.png" type="image/png">
 </head>
 <body>
+    <header class="header">
+        <!-- Logo Image -->
+        <div class="logo1">
+          <img src="RoamMate_title.svg" alt="Logo" />
+        </div>
+      
+        <!-- Hamburger Menu Icon -->
+        <div class="hamburger-menu" onclick="toggleMenu()">
+          &#9776;
+        </div>
+      </header>
+      
+      <!-- Menu -->
+      <div id="nav-menu" class="nav-menu">
+        <ul>
+          <li><a href="rm_home.html">Home</a></li>
+          <div class="divider2"></div>
+          <li><a href="rm_standard.html">Standard Itineraries</a></li>
+          <div class="divider2"></div>
+          <li><a href="rm_requested.html">Add Requested</a></li>
+          <div class="divider2"></div>
+          <li><a href="rm_requested_record.html">Requested Itineraries</a></li>
+          <div class="divider2"></div>
+          <li><a href="rm_adminlogin.html">Logout</a></li>
+        </ul>
+      </div>
     <div class="container">
         <nav class="sidebar">
             <div class="logo">
@@ -45,6 +71,12 @@
                 }
             });
         });
+
+        // Function to toggle the navigation menu
+        function toggleMenu() {
+        const menu = document.getElementById("nav-menu");
+        menu.classList.toggle("active");
+        }    
     </script>
 </body>
 </html>

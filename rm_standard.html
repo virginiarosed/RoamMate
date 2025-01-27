@@ -9,6 +9,32 @@
     <link rel="icon" href="icon.png" type="image/png">
 </head>
 <body>
+    <header class="header">
+        <!-- Logo Image -->
+        <div class="logo1">
+          <img src="RoamMate_title.svg" alt="Logo" />
+        </div>
+      
+        <!-- Hamburger Menu Icon -->
+        <div class="hamburger-menu" onclick="toggleMenu()">
+          &#9776;
+        </div>
+      </header>
+      
+      <!-- Menu -->
+      <div id="nav-menu" class="nav-menu">
+        <ul>
+          <li><a href="rm_home.html">Home</a></li>
+          <div class="divider2"></div>
+          <li><a href="rm_standard.html">Standard Itineraries</a></li>
+          <div class="divider2"></div>
+          <li><a href="rm_requested.html">Add Requested</a></li>
+          <div class="divider2"></div>
+          <li><a href="rm_requested_record.html">Requested Itineraries</a></li>
+          <div class="divider2"></div>
+          <li><a href="rm_adminlogin.html">Logout</a></li>
+        </ul>
+      </div>
     <div class="container">
         <nav class="sidebar">
             <div class="logo">
@@ -38,7 +64,7 @@
                         
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="duration-days">Duration(Days):</label>
+                                <label for="duration-days">Duration (Days):</label>
                                 <input type="number" id="duration-days" name="duration_days" placeholder="No. of days" min="1" required>
                             </div>
                             
@@ -58,6 +84,16 @@
                         <!-- Day container -->
                         <div id="main-day-container">
                             <!-- Dynamic day containers will be inserted here -->
+                        </div>
+
+                        <div id="destination-error" style="color: red; display: none; font-size: 15px; text-align: center; margin: 0 auto; margin-bottom: 10px;">
+                            <p>Destination cannot start with a space or special characters and must be longer than one letter.</p>
+                        </div>
+                        <div id="duration-error" style="color: red; display: none; font-size: 15px; text-align: center; margin-bottom: -10px;">
+                            <p>Days must be higher than nights, and nights must be exactly 1 less than days.</p>
+                        </div>
+                        <div id="lodging-error" style="color: red; display: none; font-size: 15px; text-align: center; margin: 0 auto; margin-bottom: -10px;">
+                            <p>Lodging details cannot be empty</p>
                         </div>
                 
                         <!-- Add Button for submitting the form -->
@@ -80,6 +116,14 @@
                     <button id="modal-close" class="modal-close">&times;</button> <!-- Close button with times symbol -->
                 </div>
             </div>
+            <div id="notification-container"></div>
+            <div id="confirmation-modal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <h3>Are you sure you want to delete this itinerary?</h3>
+                    <button id="confirm-delete-btn" class="btn btn-danger">Yes, delete it</button>
+                    <button id="cancel-delete-btn" class="btn btn-secondary">Cancel</button>
+                </div>
+            </div>
         </main>
     </div>
     <script src="rm_standard.js"></script>
@@ -100,6 +144,12 @@
                 }
             });
         });
+
+        // Function to toggle the navigation menu
+        function toggleMenu() {
+        const menu = document.getElementById("nav-menu");
+        menu.classList.toggle("active");
+        }    
     </script>
 </body>
 </html>

@@ -111,3 +111,113 @@ body, html {
     display: block;
     margin-bottom: 20px;
 }
+
+.content {
+    width: 92%;
+    padding: 40px;
+    background-color: #FFF0D9;
+    background-image: url('rm_mainbg.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+.image-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch; 
+    background-color: #FEFAE0;
+    border: 4px solid #BC6C25;
+    border-radius: 15px;
+    height: 35vh; 
+    margin-bottom: 40px;
+}
+
+.left-part {
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    padding: 10px;
+    height: 100%; 
+}
+
+.left-part img {
+    max-width: 85%;
+    height: auto;
+}
+
+.right-part {
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    padding: 20px;
+    background-color: #BC6C25;
+    flex-grow: 1; 
+    height: 100%; 
+}
+
+.right-part img {
+    max-width: 60%;
+    height: auto;
+}
+
+.button-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 20px;
+    column-gap: 20px;
+    justify-items: center;
+    align-items: center;
+}
+
+.button {
+    background-color: #FEFAE0;
+    border: 4px solid #BC6C25;
+    border-radius: 20px;
+    width: 570px;
+    height: 140px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Montserrat-Bold', sans-serif;
+    color: #BC6C25;
+    text-decoration: none;
+    overflow: hidden; /* Ensure content doesn't spill out */
+    padding: 10px;
+}
+
+.button a {
+    text-decoration: none;
+    color: inherit; /* Ensure link color matches the button */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* Make the link fill the button */
+    height: 100%; /* Ensure it spans the full height */
+    padding: 10px; /* Add some spacing inside the button */
+}
+
+.button span {
+    font-size: 30px;
+    flex: 1; /* Ensures proper alignment */
+    text-align: left;
+}
+
+.button div {
+    font-size: 30px;
+    font-weight: bold;
+    flex-shrink: 0; /* Prevents shrinking */
+    text-align: right;
+}
+
+.button img {
+    margin: 10px;
+    margin-right: 10px;
+}
+
+.button:hover {
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}

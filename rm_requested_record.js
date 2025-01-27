@@ -3,15 +3,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function formatDateRange(startDate, endDate) {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    
         const start = new Date(startDate).toLocaleDateString('en-US', options);
         const end = new Date(endDate).toLocaleDateString('en-US', options);
-    
-        // Return the formatted range
         return `${start} - ${end}`;
     }
 
-    // Fetch itineraries data from the PHP script
     fetch('fetch_requested_itineraries.php')
     .then(response => response.json())
     .then(data => {
@@ -24,30 +20,136 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="widget-content">
                     <h4>${itinerary.client_name}</h4>
                     <p><strong>Destination:</strong> ${itinerary.destination}</p>
+                    <p><strong>Date:</strong> ${formattedDates}</p>
                     <p><strong>Duration:</strong> ${itinerary.formatted_duration}</p>
                     <p><strong>Lodging:</strong> ${itinerary.lodging}</p>
-                    <p><strong>Date:</strong> ${formattedDates}</p>
                 </div>
+                <button class="edit-details-btn" data-id="${itinerary.id}">Edit</button>
                 <button class="view-details-btn" data-id="${itinerary.id}">View Details</button>
             `;
             container.appendChild(itineraryWidget);
 
-            // Add event listener for both widget click and button click
-            itineraryWidget.addEventListener('click', function () {
+            itineraryWidget.querySelector('.view-details-btn').addEventListener('click', function () {
                 showItineraryDetails(itinerary.id, data);
             });
-        });
 
-
-            // Add event listeners for "View Details" buttons
-            document.querySelectorAll('.view-details-btn').forEach(button => {
-                button.addEventListener('click', function () {
-                    const itineraryId = this.getAttribute('data-id');
-                    showItineraryDetails(itineraryId, data);
-                });
+            itineraryWidget.querySelector('.edit-details-btn').addEventListener('click', function () {
+                openEditModal(itinerary);
             });
         });
+    });
+
+    function openEditModal(itinerary) {
+        const modal = document.createElement('div');
+        modal.classList.add('modal');
+    
+        // Store the original data for comparison later
+        const originalData = { ...itinerary };
+    
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h1>Edit Itinerary</h1>
+                <form id="edit-itinerary-form">
+                    <div class="form-group">
+                        <label>Client Name:</label>
+                        <input type="text" name="client_name" value="${itinerary.client_name}" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Destination:</label>
+                        <input type="text" name="destination" value="${itinerary.destination}" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Lodging:</label>
+                        <input type="text" name="lodging" value="${itinerary.lodging}" required />
+                    </div>
+                    <!-- These fields are removed, but still part of the update logic -->
+                    <input type="hidden" name="start_date" value="${itinerary.start_date}" />
+                    <input type="hidden" name="end_date" value="${itinerary.end_date}" />
+                    <input type="hidden" name="formatted_duration" value="${itinerary.formatted_duration}" />
+                    
+                    <button type="submit">Save Changes</button>
+                </form>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        modal.style.display = 'block';
+    
+        // Close the modal when clicking on the close button
+        modal.querySelector('.close').addEventListener('click', function () {
+            modal.style.display = 'none';
+            modal.remove();
+        });
+    
+        // Close modal when clicking outside of it
+        window.addEventListener('click', function (event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    
+        // Handle form submission to update itinerary
+        const form = document.getElementById('edit-itinerary-form');
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const updatedData = {
+                id: itinerary.id,
+                client_name: formData.get('client_name'),
+                destination: formData.get('destination'),
+                lodging: formData.get('lodging'),
+                start_date: formData.get('start_date'),
+                end_date: formData.get('end_date'),
+                formatted_duration: formData.get('formatted_duration')
+            };
+            updateItinerary(updatedData, modal, originalData); // Pass original data for comparison
+        });
+    }
+    
+    function updateItinerary(updatedData, modal, originalData) {
+        // Check if the values are different from the original ones
+        const isUpdated = updatedData.client_name !== originalData.client_name ||
+                          updatedData.destination !== originalData.destination ||
+                          updatedData.lodging !== originalData.lodging;
+    
+        if (!isUpdated) {
+            // If no updates were made, show the 'No updates were made' toast
+            showToast('No updates were made', 'error');
+            modal.style.display = 'none';
+            modal.remove();
+            return;
+        }
+    
+        fetch('update_requested_itinerary.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updatedData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Show the success toast
+                showToast('Itinerary updated successfully', 'success');
+                modal.style.display = 'none';
+                modal.remove();
+                
+                // Delay the page reload by 3 seconds (to allow the toast to fade)
+                setTimeout(() => {
+                    location.reload(); // Reload the page after the toast fades
+                }, 3000); // Adjust time to match your toast's duration
+            } else {
+                showToast('Error updating itinerary', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showToast('Failed to update itinerary', 'error');
+        });
+    }
+    
 });
+
 
 // Function to convert 24-hour time to 12-hour format
 function convertTo12HourFormat(time) {
@@ -59,13 +161,16 @@ function convertTo12HourFormat(time) {
     return `${hour}:${minutes} ${ampm}`;
 }
 
+
 function showItineraryDetails(itineraryId, data) {
     const itinerary = data.find(itinerary => itinerary.id == itineraryId);
     const modal = document.createElement('div');
     modal.classList.add('modal');
 
+
     // Grouping the days by day_number
     const dayGroups = groupByDay(itinerary.days);
+
 
     // Helper function to format date ranges
     function formatDateRange(startDate, endDate) {
@@ -75,8 +180,10 @@ function showItineraryDetails(itineraryId, data) {
         return `${start} - ${end}`;
     }
 
+
     // Format the itinerary date range
     const formattedDateRange = formatDateRange(itinerary.start_date, itinerary.end_date);
+
 
     modal.innerHTML = `
         <div class="modal-content">
@@ -88,16 +195,19 @@ function showItineraryDetails(itineraryId, data) {
             <p><strong>Lodging:</strong> ${itinerary.lodging}</p>
             <p><strong>Duration:</strong> ${itinerary.formatted_duration}</p>
 
+
             <div class="day-groups">
                 ${Object.keys(dayGroups).map(dayNumber => {
                     const day = dayGroups[dayNumber][0]; // First day object for this day_number
 
+
                     // Format the day's date
-                    const formattedDayDate = new Date(day.date).toLocaleDateString('en-US', { 
-                        year: 'numeric', 
-                        month: 'long', 
-                        day: 'numeric' 
+                    const formattedDayDate = new Date(day.date).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
                     });
+
 
                     return `
                         <div class="day-group">
@@ -107,6 +217,7 @@ function showItineraryDetails(itineraryId, data) {
                                     <tr>
                                         <th>Time</th>
                                         <th>Activity</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -114,6 +225,7 @@ function showItineraryDetails(itineraryId, data) {
                                         <tr>
                                             <td style="text-align: center; font-weight:">${convertTo12HourFormat(day.start_time)} - ${convertTo12HourFormat(day.end_time)}</td>
                                             <td>${day.activity}</td>
+                                            <td><button class="edit-day-btn" data-day-id="${day.id}" data-itinerary-id="${itineraryId}">Edit</button></td>
                                         </tr>
                                     `).join('')}
                                 </tbody>
@@ -143,8 +255,10 @@ function showItineraryDetails(itineraryId, data) {
         </div>
     `;
 
+
     document.body.appendChild(modal);
     modal.style.display = 'block';
+
 
     // Close the modal when clicking on the close button
     modal.querySelector('.close').addEventListener('click', function () {
@@ -152,16 +266,146 @@ function showItineraryDetails(itineraryId, data) {
         modal.remove();
     });
 
+
     // Close modal when clicking outside of it
     window.addEventListener('click', function (event) {
         if (event.target === modal) {
             modal.style.display = 'none';
         }
     });
-    
+   
     // Add the event listener for the delete button
     document.getElementById('delete-itinerary').addEventListener('click', function() {
         deleteItinerary(itineraryId, modal);
+    });
+
+    // Add event listeners for edit buttons
+    modal.querySelectorAll('.edit-day-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const dayId = this.getAttribute('data-day-id');
+            const itineraryId = this.getAttribute('data-itinerary-id');
+            openEditDayModal(dayId, itineraryId);
+        });
+    });
+}
+
+function openEditDayModal(dayId, itineraryId) {
+    const modal = document.createElement('div');
+    modal.classList.add('modal');
+
+    // Fetch the day details using dayId and itineraryId
+    const fetchUrl = `fetch_day_details.php?day_id=${dayId}&itinerary_id=${itineraryId}`;
+    fetch(fetchUrl)
+        .then(response => response.json())
+        .then(day => {
+            if (day.error) {
+                alert('Failed to fetch day details');
+                return;
+            }
+
+            const originalData = { // Save the original data
+                start_time: day.start_time,
+                end_time: day.end_time,
+                activity: day.activity
+            };
+
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h1>Edit Day</h1>
+                    <form id="edit-day-form">
+                        <div class="form-group">
+                            <label>Start Time:</label>
+                            <input type="time" name="start_time" value="${day.start_time}" required />
+                        </div>
+                        <div class="form-group">
+                            <label>End Time:</label>
+                            <input type="time" name="end_time" value="${day.end_time}" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Activity:</label>
+                            <input type="text" name="activity" value="${day.activity}" required />
+                        </div>
+                        <button type="submit">Save Changes</button>
+                    </form>
+                </div>
+            `;
+
+            // Attach the modal to the body and display it
+            document.body.appendChild(modal);
+            modal.style.display = 'block';
+
+            // Close the modal when clicking on the close button
+            modal.querySelector('.close').addEventListener('click', function () {
+                modal.style.display = 'none';
+                modal.remove();
+            });
+
+            // Handle form submission to update day details
+            const form = document.getElementById('edit-day-form');
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const formData = new FormData(form);
+                const updatedDayData = {
+                    day_id: dayId,
+                    itinerary_id: itineraryId,
+                    start_time: formData.get('start_time'),
+                    end_time: formData.get('end_time'),
+                    activity: formData.get('activity'),
+                    original_start_time: originalData.start_time,
+                    original_end_time: originalData.end_time,
+                    original_activity: originalData.activity
+                };
+                updateDayDetails(updatedDayData, modal);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching day details:', error);
+            alert('Failed to fetch day details');
+        });
+}
+
+function updateDayDetails(updatedDayData, modal) {
+    console.log('Updating day details with data:', updatedDayData); // Debugging statement
+
+    // Check if any updates were actually made
+    const isUpdated = updatedDayData.start_time !== updatedDayData.original_start_time ||
+                      updatedDayData.end_time !== updatedDayData.original_end_time ||
+                      updatedDayData.activity !== updatedDayData.original_activity;
+
+    if (!isUpdated) {
+        // Show a "No updates were made" toast if no changes are detected
+        showToast('No updates were made', 'error');
+        modal.style.display = 'none';
+        modal.remove();
+        return;
+    }
+
+    fetch('update_day_details.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedDayData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Update response:', data); // Debugging statement
+
+        if (data.success) {
+            showToast('Day details updated successfully', 'success');
+            modal.style.display = 'none';
+            modal.remove();
+
+            // Update the DOM with the new data
+            const dayRow = document.querySelector(`button[data-day-id="${updatedDayData.day_id}"]`).closest('tr');
+            dayRow.querySelector('td:nth-child(1)').textContent = `${convertTo12HourFormat(updatedDayData.start_time)} - ${convertTo12HourFormat(updatedDayData.end_time)}`;
+            dayRow.querySelector('td:nth-child(2)').textContent = updatedDayData.activity;
+        } else {
+            showToast('Error updating day details', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showToast('Failed to update day details', 'error');
     });
 }
 
@@ -169,7 +413,7 @@ function showItineraryDetails(itineraryId, data) {
 function deleteItinerary(itineraryId, modal) {
     // Show a confirmation prompt
     const isConfirmed = confirm("Are you sure you want to delete this itinerary?");
-    
+   
     // If the user confirms, proceed with the deletion
     if (isConfirmed) {
         fetch(`delete_requested_itinerary.php?id=${itineraryId}`, {
@@ -202,6 +446,7 @@ function deleteItinerary(itineraryId, modal) {
     }
 }
 
+
 // Function to group days by day_number
 function groupByDay(days) {
     return days.reduce((groups, day) => {
@@ -211,4 +456,19 @@ function groupByDay(days) {
         groups[day.day_number].push(day);
         return groups;
     }, {});
+
+}
+
+function showToast(message, type = 'success') {
+    const toast = document.createElement('div');
+    toast.classList.add('toast', type);
+    toast.textContent = message;
+
+    // Add the toast to the body
+    document.body.appendChild(toast);
+
+    // Remove the toast after 3 seconds
+    setTimeout(() => {
+        toast.remove();
+    }, 3000); // Adjust time as needed
 }

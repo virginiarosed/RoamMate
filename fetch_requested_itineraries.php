@@ -35,6 +35,7 @@ if ($result->num_rows > 0) {
         if ($day_result->num_rows > 0) {
             while ($day = $day_result->fetch_assoc()) {
                 $days[] = [
+                    'id' => $day['id'],
                     'day_number' => $day['day_number'],
                     'date' => $day['date'],
                     'day' => $day['day'],

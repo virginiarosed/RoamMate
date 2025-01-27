@@ -22,5 +22,85 @@
                 <li><a href="rm_adminlogin.html"><img src="logout.svg" alt="Log Out Icon" style="width: 33px; height: auto;"><span>Log Out</span></a></li>
             </ul>            
         </nav>
-        <main class="content"> 
-            <img src="rm_home_title.svg" alt="Home Title" class="home-img">
+        <main class="content">
+
+            <div class="image-container">
+                
+                <div class="left-part">
+                    <img src="rm_client_logo.svg" alt="Client Logo">
+                </div>
+
+                <div class="right-part">
+                    <img src="rm_client_title.svg" alt="Admin Title">
+                </div>
+            </div>
+
+            <div class="button-container">
+                <div class="button" id="strandardButton">
+                    <a href="rm_standard.html">
+                        <img src="standard_itinerary.svg" alt="Standard Icon">
+                        <span>Standard Itinerary</span>
+                        <div id="standardCount"></div>
+                    </a>
+                </div>
+                <div class="button" id="requestedButton">
+                    <a href="rm_requested_record.html">
+                        <img src="requested_record.svg" alt="Users Itinerary Icon">
+                        <span>Requested Itinerary</span>
+                        <div id="requestedCount"></div>
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Function to fetch the number of itineraries and display it
+function fetchStandardCount() {
+    fetch('fetch_standard_count.php')  // Make sure this path is correct
+        .then(response => response.json())
+        .then(data => {
+            if (data.count) {
+                // If the count is returned, display it in the div
+                document.getElementById('standardCount').textContent = data.count;
+            } else {
+                // If an error occurs, handle it here
+                console.error('Error fetching itinerary count:', data.error);
+                document.getElementById('standardCount').textContent = 'Error';
+            }
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+            document.getElementById('standardCount').textContent = 'Error';
+        });
+}
+
+// Call the function on page load
+document.addEventListener('DOMContentLoaded', fetchStandardCount);
+
+document.addEventListener("DOMContentLoaded", function () {
+    fetchRequestedCount();
+
+    // Fetch the count of requested itineraries from the server
+    function fetchRequestedCount() {
+        fetch('fetch_requested_count.php')
+            .then(response => response.json())
+            .then(data => {
+                const requestedCountDiv = document.getElementById('requestedCount');
+                
+                // Check if there was an error or if the count is valid
+                if (data.error) {
+                    console.error(data.error);
+                    requestedCountDiv.textContent = "Error loading count";
+                } else {
+                    requestedCountDiv.textContent = data.count; // Display the count
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching requested itineraries count:', error);
+            });
+    }
+});
+    </script>
+</body>
+</html>

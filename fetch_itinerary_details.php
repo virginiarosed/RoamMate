@@ -21,7 +21,7 @@ if (isset($_GET['id'])) {
 
     if ($itinerary) {
         // Get the days and activities for this itinerary
-        $stmt = $pdo->prepare("SELECT day_number, start_time, end_time, activity FROM itinerary_days WHERE itinerary_id = :id ORDER BY day_number, start_time");
+        $stmt = $pdo->prepare("SELECT id, day_number, start_time, end_time, activity FROM itinerary_days WHERE itinerary_id = :id ORDER BY day_number, start_time");
         $stmt->execute([':id' => $id]);
         $daysData = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -30,6 +30,7 @@ if (isset($_GET['id'])) {
         foreach ($daysData as $row) {
             $days[$row['day_number']]['day_number'] = $row['day_number'];
             $days[$row['day_number']]['activities'][] = [
+                'id' => $row['id'], // Add the id field
                 'start_time' => date("g:i A", strtotime($row['start_time'])), // Convert to 12-hour format
                 'end_time' => date("g:i A", strtotime($row['end_time'])),     // Convert to 12-hour format
                 'activity' => $row['activity']

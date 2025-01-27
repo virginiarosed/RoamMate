@@ -33,6 +33,113 @@ body, html {
     scrollbar-color: #BC6C25 #FEFAE0;
 }
 
+.header {
+    background-color: #FEFAE0;
+    height: 60px;
+    position: relative;
+    display: none; /* Hide the header by default */
+    border-bottom: 3px solid #BC6C25;
+  }
+  
+  .logo1 img {
+    height: 40px; /* Adjust the logo height */
+    max-width: 100%;
+    object-fit: contain; /* Ensure it looks good in the space */
+    margin-top: 10px;
+    margin-left: 10px;
+  }
+  
+  /* Hamburger Menu Button */
+  .hamburger-menu {
+    font-size: 30px;
+    color: #BC6C25;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    display: none; /* Hide the hamburger menu by default */
+  }
+  
+  /* Navigation Menu */
+  .nav-menu {
+    display: none; /* Hide the navigation menu by default */
+    background-color: #BC6C25;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 250px;
+    height: 100%;
+    padding-top: 50px;
+    margin-top: 57px;
+    text-align: center;
+  }
+  
+  .nav-menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .nav-menu ul li {
+    padding: 10px;
+    display: flex; /* Use flexbox for li */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+  }
+  
+  .nav-menu ul li a {
+    color: #FFF0D9;
+    text-decoration: none;
+    font-size: 20px;
+    display: block;
+    width: 100%; /* Ensure the anchor takes full width */
+    text-align: center; /* Center text inside the anchor */
+  }
+  
+  .divider2 {
+    grid-column: 1 / -1; /* Span across all columns */
+    width: 80%;
+    height: 1px;
+    background-color: #FEFAE0; /* Set color for the divider */
+    margin: 10px auto; /* Center horizontally and add vertical spacing */
+  }
+  
+  .nav-menu ul li a:hover {
+    background-color: #DDA15E;
+    border-radius: 20px;
+  }
+  
+  /* Show the header and menu on small screens */
+  @media (max-width: 768px) {
+    .header {
+      display: block; /* Show header on small screens */
+    }
+  
+    .hamburger-menu {
+      display: block; /* Show hamburger menu */
+    }
+  
+    .nav-menu.active {
+      display: block; /* Show the navigation menu when active */
+    }
+  }
+  
+  /* Hide the header and hamburger menu on larger screens */
+  @media (min-width: 769px) {
+    .header {
+      display: none; /* Hide the header */
+    }
+  
+    .hamburger-menu {
+      display: none; /* Hide the hamburger menu */
+    }
+  
+    .nav-menu {
+      display: none; /* Hide the navigation menu */
+    }
+  }
+
 /* Container and sidebar layout */
 .container {
     display: flex;
@@ -317,9 +424,283 @@ tr:hover {
     border-radius: 8px;
 }
 
+.edit-details-btn {
+    display: inline-block;
+    background-color: #BC6C25; /* Button background color */
+    color: white; /* Text color */
+    padding: 10px 20px; /* Padding around the text */
+    font-family: 'Montserrat-Medium', sans-serif; /* Font style */
+    font-size: 14px; /* Font size */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    text-align: center;
+    transition: background-color 0.3s; /* Transition for hover effect */
+    margin-left: auto; /* Automatically push the button to the right */
+    margin-right: auto; /* Automatically push the button to the left */
+    display: block; /* Make it a block-level element to take full width */
+}
+
+.edit-details-btn:hover {
+    background-color: #DDA15E; /* Lighter background color on hover */
+}
+
+.edit-details-btn:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 5px #DDA15E; /* Box shadow effect on focus */
+}
+
+#edit-day-form label {
+    display: block; /* Ensure the label takes up a full line */
+    font-size: 16px; /* Font size */
+    margin-bottom: 5px; /* Space below the label */
+    color: #BC6C25; /* Label text color */
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+#edit-day-form input[type="text"],
+#edit-day-form input[type="time"] {
+    width: 100%; /* Make the inputs take up full width */
+    padding: 5px; /* Padding inside the input fields */
+    font-size: 14px; /* Font size */
+    font-family: 'Montserrat-Regular', sans-serif;
+    border: 2px solid #BC6C25;
+    border-radius: 5px; /* Rounded corners */
+    box-sizing: border-box; /* Include padding in width */
+    background-color: #fff; /* Background color of inputs */
+}
+
+#edit-day-form button { 
+    display: block; /* Make button a block element */
+    background-color: #BC6C25; /* Button background color */
+    color: white; /* Button text color */
+    padding: 10px 20px; /* Padding around text */
+    font-family: 'Montserrat-Medium', sans-serif; /* Font style */
+    font-size: 14px; /* Font size */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    text-align: center;
+    transition: background-color 0.3s; /* Smooth background color transition */
+    margin: 0 auto; /* Center the button horizontally */
+    margin-top: 10px;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #BC6C25;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    background: transparent;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+#edit-day-form button:hover {
+    background-color: #DDA15E; 
+}
+
+#edit-day-form .time-container {
+    display: flex; /* Enable flexbox layout */
+    justify-content: space-between; /* Distribute space between the items */
+    gap: 15px; /* Space between the fields */
+}
+
+#edit-day-form .form-group {
+    flex: 1; /* Allow form groups to grow equally */
+    min-width: 0; /* Prevent them from becoming too wide */
+}
+
+#edit-itinerary-form label {
+    display: block; /* Ensure the label takes up a full line */
+    font-size: 16px; /* Font size */
+    margin-bottom: 5px; /* Space below the label */
+    color: #BC6C25; /* Label text color */
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+#edit-itinerary-form input[type="text"],
+#edit-itinerary-form input[type="time"] {
+    width: 100%; /* Make the inputs take up full width */
+    padding: 5px; /* Padding inside the input fields */
+    font-size: 14px; /* Font size */
+    font-family: 'Montserrat-Regular', sans-serif;
+    border: 2px solid #BC6C25;
+    border-radius: 5px; /* Rounded corners */
+    box-sizing: border-box; /* Include padding in width */
+    background-color: #fff; /* Background color of inputs */
+}
+
+#edit-itinerary-form button { 
+    display: block; /* Make button a block element */
+    background-color: #BC6C25; /* Button background color */
+    color: white; /* Button text color */
+    padding: 10px 20px; /* Padding around text */
+    font-family: 'Montserrat-Medium', sans-serif; /* Font style */
+    font-size: 14px; /* Font size */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    text-align: center;
+    transition: background-color 0.3s; /* Smooth background color transition */
+    margin: 0 auto; /* Center the button horizontally */
+    margin-top: 20px;
+}
+
+.edit-day-btn { 
+    display: block; /* Make button a block element */
+    background-color: #BC6C25; /* Button background color */
+    color: white; /* Button text color */
+    padding: 10px 20px; /* Padding around text */
+    font-family: 'Montserrat-Medium', sans-serif; /* Font style */
+    font-size: 14px; /* Font size */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    text-align: center;
+    transition: background-color 0.3s; /* Smooth background color transition */
+    margin: 0 auto;
+}
+
+#notification-container .notification {
+    background-color: #BC6C25;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    width: 300px;
+    text-align: center;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+#notification-container {
+    position: fixed;
+    top: 10px; /* Distance from the top */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust position to exactly center */
+    z-index: 9999; /* Keep it on top */
+    width: 300px; /* Optional: Set a fixed width */
+}
+
+#notification-container .notification.error {
+    background-color: #f44336; /* Red background for errors */
+}
+
+#confirmation-modal .modal-content {
+    width: 400px; /* Adjust width as needed */
+    max-width: 80%; /* Ensures it is responsive */
+    min-width: 300px; /* Ensures it is never too small */
+    margin-top: 150px;
+}
+
+.btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Hover effects for buttons */
+.btn:hover {
+    transform: scale(1.05); /* Slightly enlarge the button on hover */
+}
+
+/* Style for confirm-delete-btn */
+#confirm-delete-btn {
+    background-color: #BC6C25;
+    color: white;
+    margin-top: 10px;
+    font-size: 14px;
+    display: inline-block; /* Change from block to inline-block to align in the same row */
+    margin-left: 40px; /* Optional: space between buttons */
+    font-family: 'Montserrat-Medium', sans-serif;
+    padding: 10px 20px; /* Adjust padding if necessary */
+}
+
+/* Hover effect for confirm-delete-btn */
+#confirm-delete-btn:hover {
+    background-color: #DDA15E;
+}
+
+/* Style for cancel-delete-btn */
+#cancel-delete-btn {
+    background-color: #BC6C25;
+    color: white;
+    margin-top: 10px;
+    font-size: 14px;
+    display: inline-block; /* Change from block to inline-block to align in the same row */
+    margin-left: 10px; /* Optional: space between buttons */
+    font-family: 'Montserrat-Medium', sans-serif;
+    padding: 10px 20px; /* Adjust padding if necessary */
+}
+
+/* Hover effect for cancel-delete-btn */
+#cancel-delete-btn:hover {
+    background-color: #DDA15E;
+}
+
 .menu li:focus-within {
     outline: 2px solid #BC6C25; 
     background-color: #dda25e9f; 
     border-radius: 8px;
     border-radius: 8px;
+}
+
+.toast {
+    position: fixed;
+    top: 120px; /* Set the toast to appear near the top of the page */
+    left: 50%;
+    transform: translateX(-50%); /* Center the toast horizontally */
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    z-index: 9999; /* Ensure the toast is on top of other elements */
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.toast.success {
+    background-color: #4CAF50; /* Green for success */
+}
+
+.toast.error {
+    background-color: #f44336; /* Red for error */
+}
+
+.toast.fade-out {
+    opacity: 0;
+}
+
+@media (max-width: 768px) {
+    body, html {
+        overflow: auto;
+    }
+    .sidebar {
+        display: none;  /* Hide sidebar */
+    }
+    .container {
+        display: block;  /* Stack the content */
+        border: none;
+    }
+    .content {
+        width: 100%; /* Full width for content */
+        padding: 20px; /* Adjust padding if necessary */
+        height: 100vh;
+    }
+    .requested-record-img {
+        max-width: 100%;  
+        height: auto;    /* Maintain aspect ratio */
+        margin-bottom: 10px;
+    }
 }
