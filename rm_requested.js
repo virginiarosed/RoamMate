@@ -214,119 +214,126 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Handle form submission and show modal
-document.querySelector(".add-itinerary-btn").addEventListener("click", function () {
-    const dayNumbers = [];
-    const dates = [];
-    const days = [];
-    const startTimes = [];
-    const endTimes = [];
-    const activities = [];
-
-    // Collect day-wise data
-    document.querySelectorAll(".day-container").forEach(function (dayContainer, index) {
-        const dayNumber = index + 1;
+    document.querySelector(".add-itinerary-btn").addEventListener("click", function () {
+        const dayNumbers = [];
+        const dates = [];
+        const days = [];
+        const startTimes = [];
+        const endTimes = [];
+        const activities = [];
     
-        // Get the date and convert to YYYY-MM-DD format using local time
-        const currentDate = new Date(dayContainer.querySelector("h3").innerText.split(":")[1].split("(")[0].trim());
+        // Collect day-wise data
+        document.querySelectorAll(".day-container").forEach(function (dayContainer, index) {
+            const dayNumber = index + 1;
         
-        const year = currentDate.getFullYear();
-        const month = String(currentDate.getMonth() + 1).padStart(2, '0');  // Month is 0-based, so add 1
-        const dayOfMonth = String(currentDate.getDate()).padStart(2, '0');  // Ensure two digits for the day
+            // Get the date and convert to YYYY-MM-DD format using local time
+            const currentDate = new Date(dayContainer.querySelector("h3").innerText.split(":")[1].split("(")[0].trim());
+            
+            const year = currentDate.getFullYear();
+            const month = String(currentDate.getMonth() + 1).padStart(2, '0');  // Month is 0-based, so add 1
+            const dayOfMonth = String(currentDate.getDate()).padStart(2, '0');  // Ensure two digits for the day
+        
+            const formattedDate = `${year}-${month}-${dayOfMonth}`;  // Format as YYYY-MM-DD
+        
+            const dayOfWeek = dayContainer.querySelector("h3").innerText.split("(")[1].split(")")[0].trim(); // Get the day of the week
+        
+            // Collect time slot data for the day
+            const timeSlots = dayContainer.querySelectorAll(".time-slot");
+            timeSlots.forEach(function (timeSlot) {
+                const startTime = timeSlot.querySelector("input[name^='time_range']").value;
+                const endTimeInput = timeSlot.querySelector("input[name^='time_range']:nth-child(2)");
+                
+                // Ensure the end time is enabled if there is a valid start time
+                if (startTime && endTimeInput.disabled) {
+                    endTimeInput.disabled = false;
+                }
     
-        const formattedDate = `${year}-${month}-${dayOfMonth}`;  // Format as YYYY-MM-DD
+                const endTime = endTimeInput.value;
+                const activity = timeSlot.querySelector("input[name^='activity']").value;
+        
+                // Push values into the respective arrays
+                dayNumbers.push(dayNumber);
+                dates.push(formattedDate); // Push the properly formatted date
+                days.push(dayOfWeek); // Use dayOfWeek instead of day
+                startTimes.push(startTime);
+                endTimes.push(endTime); // Ensure end time is correctly captured
+                activities.push(activity);
+            });
+        });    
     
-        const dayOfWeek = dayContainer.querySelector("h3").innerText.split("(")[1].split(")")[0].trim(); // Get the day of the week
-    
-        // Collect time slot data for the day
-        const timeSlots = dayContainer.querySelectorAll(".time-slot");
-        timeSlots.forEach(function (timeSlot) {
-            const startTime = timeSlot.querySelector("input[name^='time_range']").value;
-            const endTime = timeSlot.querySelector("input[name^='time_range']").value;
-            const activity = timeSlot.querySelector("input[name^='activity']").value;
-    
-            // Push values into the respective arrays
-            dayNumbers.push(dayNumber);
-            dates.push(formattedDate); // Push the properly formatted date
-            days.push(dayOfWeek); // Use dayOfWeek instead of day
-            startTimes.push(startTime);
-            endTimes.push(endTime);
-            activities.push(activity);
+        // Add hidden inputs for day data before submitting the form
+        dayNumbers.forEach(function (value, index) {
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "day_number[]";
+            input.value = value;
+            form.appendChild(input);
         });
-    });    
-
-    // Add hidden inputs for day data before submitting the form
-    dayNumbers.forEach(function (value, index) {
-        const input = document.createElement("input");
-        input.type = "hidden";
-        input.name = "day_number[]";
-        input.value = value;
-        form.appendChild(input);
+    
+        // Repeat for other day data arrays
+        dates.forEach(function (value, index) {
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "date[]";
+            input.value = value;
+            form.appendChild(input);
+        });
+    
+        days.forEach(function (value, index) {
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "day[]";
+            input.value = value;
+            form.appendChild(input);
+        });
+    
+        startTimes.forEach(function (value, index) {
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "start_time[]";
+            input.value = value;
+            form.appendChild(input);
+        });
+    
+        endTimes.forEach(function (value, index) {
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "end_time[]";
+            input.value = value;
+            form.appendChild(input);
+        });
+    
+        activities.forEach(function (value, index) {
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "activity[]";
+            input.value = value;
+            form.appendChild(input);
+        });
+    
+        const formData = new FormData(form);
+    
+        fetch('submit_requested_itinerary.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            // Handle success
+            if (data.includes("Itinerary has been successfully added")) {
+                showModal("Itinerary has been successfully added!", false); // Success message
+                form.reset(); // Reset form
+                document.getElementById("duration-text").innerHTML = ""; // Clear duration text
+                document.getElementById("main-day-container").innerHTML = ""; // Clear day containers
+                document.querySelector('.add-itinerary-btn').style.display = 'none'; // Hide button
+            } else {
+                showModal("There was an error submitting your itinerary. \nPlease fill up all the required fields.", true); // Error message
+            }
+        })
+        .catch(error => {
+            showModal("Error: " + error.message, true);
+        });
     });
-
-    // Repeat for other day data arrays
-    dates.forEach(function (value, index) {
-        const input = document.createElement("input");
-        input.type = "hidden";
-        input.name = "date[]";
-        input.value = value;
-        form.appendChild(input);
-    });
-
-    days.forEach(function (value, index) {
-        const input = document.createElement("input");
-        input.type = "hidden";
-        input.name = "day[]";
-        input.value = value;
-        form.appendChild(input);
-    });
-
-    startTimes.forEach(function (value, index) {
-        const input = document.createElement("input");
-        input.type = "hidden";
-        input.name = "start_time[]";
-        input.value = value;
-        form.appendChild(input);
-    });
-
-    endTimes.forEach(function (value, index) {
-        const input = document.createElement("input");
-        input.type = "hidden";
-        input.name = "end_time[]";
-        input.value = value;
-        form.appendChild(input);
-    });
-
-    activities.forEach(function (value, index) {
-        const input = document.createElement("input");
-        input.type = "hidden";
-        input.name = "activity[]";
-        input.value = value;
-        form.appendChild(input);
-    });
-
-    const formData = new FormData(form);
-
-    fetch('submit_requested_itinerary.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.text())
-    .then(data => {
-        // Handle success
-        if (data.includes("Itinerary has been successfully added")) {
-            showModal("Itinerary has been successfully added!", false); // Success message
-            form.reset(); // Reset form
-            document.getElementById("duration-text").innerHTML = ""; // Clear duration text
-            document.getElementById("main-day-container").innerHTML = ""; // Clear day containers
-            document.querySelector('.add-itinerary-btn').style.display = 'none'; // Hide button
-        } else {
-            showModal("There was an error submitting your itinerary. \nPlease fill up all the required fields.", true); // Error message
-        }
-    })
-    .catch(error => {
-        showModal("Error: " + error.message, true);
-    });
-});
 
     // Add event listeners
     startDateInput.addEventListener("change", updateDuration);
