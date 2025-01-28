@@ -28,8 +28,13 @@ $nights = max(0, $duration_days - 1); // Nights are days - 1, but can't be negat
 $days_text = $duration_days === 1 ? "Day" : "Days";
 $nights_text = $nights <= 1 ? "Night" : "Nights";
 
-// Format the duration string
-$formatted_duration = "$duration_days $days_text, $nights $nights_text";
+// Check if the duration is 1 Day and 0 Night, and change to "Roundtrip"
+if ($duration_days === 1 && $nights === 0) {
+    $formatted_duration = "Roundtrip";
+} else {
+    // Otherwise, use the regular days and nights format
+    $formatted_duration = "$duration_days $days_text, $nights $nights_text";
+}
 
 // Insert data into the requested_itineraries table
 $sql = "INSERT INTO requested_itineraries (client_name, destination, start_date, end_date, lodging, duration, formatted_duration) 

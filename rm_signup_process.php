@@ -35,20 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error_message = "Please enter a valid email address.";
     }
 
-    // Check if the email is already in use (Database check)
-    if (empty($error_message)) {
-        $conn = db_connect(); // Assuming you have a db_connect function that returns a database connection
-        $stmt = $conn->prepare("SELECT email FROM admin_users WHERE email = ?");
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        
-        if ($result->num_rows > 0) {
-            $error_message = "This email is already in use. Please choose another one.";
-        }
-        $stmt->close();
-    }
-
     // If there are no errors, proceed with registration
     if (empty($error_message)) {
         // Hash the password before storing it
@@ -59,10 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->bind_param("sss", $email, $hashed_password, $company_code);
 
         if ($stmt->execute()) {
-            // Redirect to success page or show success message
-            echo "Form submitted successfully. You are now registered.";
-            // Optionally, redirect to a login page after successful registration
-            // header("Location: login_page.php"); // Uncomment to redirect to login page
+            // Redirect to the login page after successful registration
+            header("Location: rm_adminlogin.html");
             exit;
         } else {
             $error_message = "There was an error processing your registration. Please try again later.";
@@ -150,15 +134,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         />
                     </div>
 
-                <div id="company-code-error" style="color: red; display: none; font-size: 15px; text-align: center; margin: 0 auto; margin-bottom: 10px;">
-                    <p>Invalid company code.</p>
-                </div>
-                <div id="password-error" style="color: red; display: none; font-size: 15px; text-align: center; margin: 0 auto; margin-bottom: -10px;">
-                    <p>Passwords do not match</p>
-                </div>         
-                <div id="email-error" style="color: red; display: none; font-size: 15px; text-align: center; margin: 0 auto; margin-bottom: 10px;">
-                    <p>This email is already in use. Please choose another one.</p>
-                </div>
+                    <div id="email-error" style="color: red; display: none; font-size: 15px; text-align: center; margin: 0 auto; margin-bottom: 10px;">
+                        <p>This email is already in use. Please choose another one.</p>
+                    </div>
+                    <div id="password-error" style="color: red; display: none; font-size: 15px; text-align: center; margin: 0 auto; margin-bottom: -10px;">
+                        <p>Passwords do not match</p>
+                    </div>
+                    <div id="company-code-error" style="color: red; display: none; font-size: 15px; text-align: center; margin: 0 auto; margin-bottom: 10px;">
+                        <p>Invalid company code. Please try again.</p>
+                    </div>
                 <button type="submit" class="signup-button">Sign Up</button>                 
                 <p class="login-text">Already have an account? <a href="rm_adminlogin.html">Log In</a></p>
             </div>

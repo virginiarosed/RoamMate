@@ -65,10 +65,10 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(data => {
                 const itineraryButtons = document.getElementById('itinerary-buttons');
                 itineraryButtons.innerHTML = ''; // Clear any existing buttons
-
+    
                 data.forEach(itinerary => {
                     const button = document.createElement('button');
-                    button.textContent = `${itinerary.destination} (${itinerary.duration_days}D ${itinerary.duration_nights}N)`;
+                    button.textContent = `${itinerary.destination} (${itinerary.formatted_duration})`;
                     button.classList.add('itinerary-btn');
                     button.setAttribute('data-id', itinerary.id);
                     itineraryButtons.appendChild(button);
@@ -682,4 +682,3 @@ function updateDurationTextAndDays() {
         toast.remove();
     }, 3000);
 }
-

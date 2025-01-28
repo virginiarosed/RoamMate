@@ -524,3 +524,40 @@ input[type="number"] {
     border-radius: 8px;
     border-radius: 8px;
 }
+
+.toast {
+    background-color: #f44336; /* Red background for error */
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: 'Montserrat-Regular', sans-serif;
+    font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    max-width: 100%;
+    width: 100%; /* Make the toast span the entire width of its container */
+    text-align: center;
+    opacity: 0;
+    animation: fadeInOut 3s forwards;
+    z-index: 999;
+}
+
+/* Animation for the toast */
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    20% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    80% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}

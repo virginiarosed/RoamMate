@@ -143,10 +143,12 @@
             </li>
           </ul>
 
-          <form action="#" class="contact-form">
-            <input type="text" placeholder="Name" class="form-input" required />
-            <input type="email" placeholder="Email" class="form-input" required />
-            <textarea placeholder="Message" class="form-input" required></textarea>
+          <form action="send_email.php" method="POST" class="contact-form">
+            <input type="text" name="name" placeholder="Name" class="form-input" required />
+            <input type="email" name="email" placeholder="Email" class="form-input" required />
+            <textarea name="message" placeholder="Message" class="form-input" required></textarea>
+            <div id="loading-spinner" class="loading-spinner" style="display: none;"></div>
+            <div id="form-feedback" class="form-feedback"></div>
             <button type="submit" class="button submit-button">Submit</button>
           </form>
         </div>

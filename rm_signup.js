@@ -94,19 +94,100 @@ function checkPasswordValidity() {
 
 const emailInput = document.getElementById('email');
 const emailIcon = document.querySelector('.email-icon');
+const emailError = document.getElementById('email-error'); // Reference to the error message div
 
 emailInput.addEventListener('input', function () {
     const emailValue = emailInput.value;
-    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;  // Email validation regex
 
+    // Only check if the email format is valid
+    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (regex.test(emailValue)) {
-        emailIcon.classList.remove('fa-envelope');    // Remove default envelope icon
-        emailIcon.classList.add('fa-check-circle');  // Add check-circle icon
-        emailIcon.style.color = '#585D27';            // Change icon color to green (valid)
+        // Make an AJAX request to check if the email is already in use
+        fetch('check_email.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `email=${encodeURIComponent(emailValue)}`,
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.exists) {
+                    // Email already in use
+                    emailError.style.display = 'block'; // Show error message
+                    emailError.textContent = 'This email is already in use. Please choose another one.';
+
+                    // Set envelope icon to invalid (red)
+                    emailIcon.classList.remove('fa-check-circle'); // Remove valid icon
+                    emailIcon.classList.add('fa-envelope'); // Add envelope icon
+                    emailIcon.style.color = 'red'; // Set icon color to red
+                } else {
+                    // Email is available
+                    emailError.style.display = 'none'; // Hide error message
+
+                    // Set envelope icon to valid (green)
+                    emailIcon.classList.remove('fa-envelope'); // Remove default icon
+                    emailIcon.classList.add('fa-check-circle'); // Add valid icon
+                    emailIcon.style.color = '#585D27'; // Set icon color to green
+                }
+            })
+            .catch(error => console.error('Error:', error));
     } else {
-        emailIcon.classList.remove('fa-check-circle'); // Remove check-circle icon
-        emailIcon.classList.add('fa-envelope');        // Add default envelope icon
-        emailIcon.style.color = 'red';                  // Change icon color to red (invalid)
+        // If email format is invalid, reset the icon and hide error message
+        emailError.style.display = 'none'; // Hide error message
+        emailIcon.classList.remove('fa-check-circle'); // Remove valid icon
+        emailIcon.classList.add('fa-envelope'); // Add default envelope icon
+        emailIcon.style.color = 'red'; // Set icon color to red
+    }
+});
+
+emailInput.addEventListener('input', function () {
+    const emailValue = emailInput.value;
+
+    // Only check if the email is valid (basic regex validation)
+    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (regex.test(emailValue)) {
+        // Make an AJAX request to check if the email is already in use
+        fetch('check_email.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `email=${encodeURIComponent(emailValue)}`,
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.exists) {
+                    // Email already in use
+                    emailError.style.display = 'block';
+                    emailError.textContent = 'This email is already in use. Please choose another one.';
+                } else {
+                    // Email is available
+                    emailError.style.display = 'none';
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    } else {
+        // If email format is invalid, hide the error message
+        emailError.style.display = 'none';
+    }
+});
+
+const companyCodeInput = document.getElementById('company-code');
+const companyCodeError = document.getElementById('company-code-error'); // Error message div
+
+// Define the valid company code
+const validCompanyCode = '4B-TRVL-ND-TRS';
+
+// Listen for input changes in the company code field
+companyCodeInput.addEventListener('input', function () {
+    const companyCodeValue = companyCodeInput.value.trim(); // Get the entered value and trim spaces
+
+    // Check if the entered code matches the predefined company code
+    if (companyCodeValue === validCompanyCode) {
+        companyCodeError.style.display = 'none'; // Hide error if valid
+    } else {
+        companyCodeError.style.display = 'block'; // Show error if invalid
     }
 });
 

@@ -1,5 +1,4 @@
 <?php
-// Database connection
 $host = 'localhost'; // Database host
 $dbname = 'roammate_db'; // Database name
 $username = 'root'; // Your database username
@@ -14,23 +13,32 @@ try {
 
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get form data
+    // Get form data and cast to integers
     $destination = $_POST['destination'];
-    $duration_days = $_POST['duration_days'];
-    $duration_nights = $_POST['duration_nights'];
+    $duration_days = (int) $_POST['duration_days']; // Cast to integer
+    $duration_nights = (int) $_POST['duration_nights']; // Cast to integer
     $lodging = $_POST['lodging'];
 
+    // Check if the duration is 1 Day and 0 Night, and change to "Roundtrip"
+    if ($duration_days === 1 && $duration_nights === 0) {
+        $formatted_duration = "Roundtrip";
+    } else {
+        // Otherwise, use the regular days and nights format without spaces
+        $formatted_duration = "$duration_days" . "D" . "$duration_nights" . "N";
+    }
+
     // Insert itinerary into the itineraries table
-    $sql = "INSERT INTO itineraries (destination, duration_days, duration_nights, lodging) 
-            VALUES (:destination, :duration_days, :duration_nights, :lodging)";
+    $sql = "INSERT INTO itineraries (destination, duration_days, duration_nights, lodging, formatted_duration) 
+            VALUES (:destination, :duration_days, :duration_nights, :lodging, :formatted_duration)";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
         ':destination' => $destination,
         ':duration_days' => $duration_days,
         ':duration_nights' => $duration_nights,
-        ':lodging' => $lodging
+        ':lodging' => $lodging,
+        ':formatted_duration' => $formatted_duration // Store the formatted duration
     ]);
-    
+
     // Get the last inserted itinerary ID
     $itinerary_id = $pdo->lastInsertId();
 

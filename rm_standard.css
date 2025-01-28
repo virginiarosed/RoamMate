@@ -809,7 +809,7 @@ input[type="number"] {
 }
 
 #notification-container .notification {
-    background-color: #BC6C25;
+    background-color: green;
     color: white;
     padding: 10px;
     border-radius: 5px;
@@ -890,7 +890,7 @@ input[type="number"] {
 }
 
 .toast {
-    background-color: #f44336; /* Red background for error */
+    background-color: red;
     color: white;
     padding: 10px;
     border-radius: 5px;

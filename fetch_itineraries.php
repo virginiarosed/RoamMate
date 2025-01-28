@@ -13,7 +13,7 @@ try {
 }
 
 // Fetch itineraries
-$sql = "SELECT id, destination, duration_days, duration_nights FROM itineraries";
+$sql = "SELECT id, destination, formatted_duration FROM itineraries";
 $stmt = $pdo->query($sql);
 $itineraries = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

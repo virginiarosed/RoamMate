@@ -675,7 +675,7 @@ tr:hover {
 }
 
 .toast.error {
-    background-color: #f44336; /* Red for error */
+    background-color: #4CAF50;
 }
 
 .toast.fade-out {
