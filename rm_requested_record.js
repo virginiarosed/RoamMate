@@ -114,8 +114,8 @@ document.addEventListener("DOMContentLoaded", function () {
                           updatedData.lodging !== originalData.lodging;
     
         if (!isUpdated) {
-            // If no updates were made, show the 'No updates were made' toast
-            showToast('No updates were made', 'error');
+            // If no updates were made, show the 'No changes were made' toast
+            showToast('No changes were made', 'error');
             modal.style.display = 'none';
             modal.remove();
             return;
@@ -374,8 +374,8 @@ function updateDayDetails(updatedDayData, modal) {
                       updatedDayData.activity !== updatedDayData.original_activity;
 
     if (!isUpdated) {
-        // Show a "No updates were made" toast if no changes are detected
-        showToast('No updates were made', 'error');
+        // Show a "No changes were made" toast if no changes are detected
+        showToast('No changes were made', 'error');
         modal.style.display = 'none';
         modal.remove();
         return;

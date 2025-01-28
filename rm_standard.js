@@ -337,7 +337,11 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log('Update response:', data);
     
             if (data.success) {
-                showNotification('Day details updated successfully');
+                showNotification('Day details updated successfully', 'success');
+                modal.style.display = 'none';
+                modal.remove();
+            } else if (data.error === 'No changes were made. Please modify the details before saving.') {
+                showNotification('No changes were made', 'error');
                 modal.style.display = 'none';
                 modal.remove();
             } else {
@@ -346,7 +350,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error('Error during update request:', error);
             showNotification('Failed to update day details', 'error');
         });
     }

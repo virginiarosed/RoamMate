@@ -191,3 +191,92 @@ companyCodeInput.addEventListener('input', function () {
     }
 });
 
+document.querySelector('form').addEventListener('submit', function(event) {
+    // Flag to check if the form is valid
+    let isValid = true;
+
+    // Check if email error is visible
+    const emailError = document.getElementById('email-error');
+    if (emailError.style.display === 'block') {
+        isValid = false; // Invalid if email error is visible
+    }
+
+    // Check if password error is visible
+    const passwordError = document.getElementById('password-error');
+    if (passwordError.style.display === 'block') {
+        isValid = false; // Invalid if password error is visible
+    }
+
+    // Check if company code error is visible
+    const companyCodeError = document.getElementById('company-code-error');
+    if (companyCodeError.style.display === 'block') {
+        isValid = false; // Invalid if company code error is visible
+    }
+
+    // Check password requirements
+    const password = document.getElementById('password').value;
+    const isPasswordValid = requirements.every(item => item.regex.test(password));
+
+    if (!isPasswordValid) {
+        isValid = false; // Invalid if password doesn't meet all the requirements
+        document.getElementById('password-requirements').style.display = 'block'; // Show requirements
+    } else {
+        document.getElementById('password-requirements').style.display = 'none'; // Hide requirements if password is valid
+    }
+
+    // If form is invalid, prevent submission
+    if (!isValid) {
+        event.preventDefault(); // Prevent form submission
+    }
+});
+
+// Ensure the form will submit if everything is valid
+document.querySelector('form').addEventListener('submit', function(event) {
+    const passwordError = document.getElementById('password-error');
+    const emailError = document.getElementById('email-error');
+    const companyCodeError = document.getElementById('company-code-error');
+    const requirementsMet = requirements.every(item => item.regex.test(document.getElementById('password').value));
+
+    // If all validation checks pass, proceed with form submission
+    if (
+        passwordError.style.display === 'none' &&
+        emailError.style.display === 'none' &&
+        companyCodeError.style.display === 'none' &&
+        requirementsMet
+    ) {
+        // Allow form submission to proceed
+        return true;
+    } else {
+        // Prevent form submission and display a message
+        event.preventDefault();
+    }
+});
+
+
+// Prevent copying (Ctrl + C, right-click copy)
+passwordInput.addEventListener('copy', function (e) {
+    e.preventDefault(); // Prevent copying
+});
+
+// Prevent pasting (Ctrl + V, right-click paste)
+passwordInput.addEventListener('paste', function (e) {
+    e.preventDefault(); // Prevent pasting
+});
+
+// Prevent text selection (optional - not strictly necessary, but could be added)
+passwordInput.addEventListener('selectstart', function (e) {
+    e.preventDefault(); // Prevent selecting text
+});
+
+// Repeat for password confirmation field if you want to disable it there too
+passwordConfirmationInput.addEventListener('copy', function (e) {
+    e.preventDefault(); // Prevent copying
+});
+
+passwordConfirmationInput.addEventListener('paste', function (e) {
+    e.preventDefault(); // Prevent pasting
+});
+
+passwordConfirmationInput.addEventListener('selectstart', function (e) {
+    e.preventDefault(); // Prevent selecting text
+});

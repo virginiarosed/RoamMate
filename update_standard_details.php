@@ -29,6 +29,35 @@ error_log("Received data: " . json_encode($data)); // Debugging statement
 $response = array();
 
 if ($day_id > 0 && $itinerary_id > 0 && $start_time && $end_time && $activity && $destination && $lodging) {
+    // Fetch current details to compare
+    $sql_fetch = "SELECT * FROM itinerary_days WHERE id = $day_id AND itinerary_id = $itinerary_id";
+    $result = $conn->query($sql_fetch);
+    if ($result->num_rows > 0) {
+        $currentData = $result->fetch_assoc();
+        $isEqual = 
+            (trim($currentData['start_time']) === trim($start_time)) &&
+            (trim($currentData['end_time']) === trim($end_time)) &&
+            (trim($currentData['activity']) === trim($activity));
+
+        $sql_fetch_itinerary = "SELECT * FROM itineraries WHERE id = $itinerary_id";
+        $result_itinerary = $conn->query($sql_fetch_itinerary);
+        if ($result_itinerary->num_rows > 0) {
+            $currentItineraryData = $result_itinerary->fetch_assoc();
+            $isEqual = $isEqual &&
+                (trim($currentItineraryData['destination']) === trim($destination)) &&
+                (trim($currentItineraryData['lodging']) === trim($lodging));
+        }
+
+        if ($isEqual) {
+            error_log("No changes detected. Update aborted."); // Debugging statement
+            $response['success'] = false;
+            $response['error'] = 'No changes were made. Please modify the details before saving.';
+            echo json_encode($response);
+            $conn->close();
+            return;
+        }
+    }
+
     $sql = "UPDATE itinerary_days SET start_time = '$start_time', end_time = '$end_time', activity = '$activity' WHERE id = $day_id AND itinerary_id = $itinerary_id";
     error_log("Executing SQL: $sql"); // Debugging statement
     

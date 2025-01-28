@@ -64,7 +64,13 @@
 
     if (errorMessage) {
         const messageContainer = document.getElementById('error-message-container');
-        messageContainer.innerHTML = `<div class="error-message">${errorMessage}</div>`;
+        // Clear any previous content
+        messageContainer.innerHTML = '';
+
+        // Show the error message (e.g., "Invalid credentials") only if the account is not locked
+        if (errorMessage !== 'Locked') {
+            messageContainer.innerHTML = `<div class="error-message">${errorMessage}</div>`;
+        }
 
         if (lockoutExpiryTimestamp) {
             const lockoutExpiryTime = parseInt(lockoutExpiryTimestamp, 10);
@@ -80,7 +86,9 @@
 
                 if (remainingTime <= 0) {
                     clearInterval(countdownInterval); // Stop the countdown
-                    countdownElement.innerHTML = 'Account unlocked, you can try logging in again.';
+
+                    // Show the account unlocked message only
+                    countdownElement.innerHTML = '<span style="color: green;">Account unlocked, you can try logging in again.</span>';
 
                     // Clear query parameters after lockout expires
                     const newUrl = window.location.origin + window.location.pathname;
