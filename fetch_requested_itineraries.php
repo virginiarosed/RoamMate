@@ -11,8 +11,16 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Get the date range from the request (if provided)
+$start_date = isset($_GET['start_date']) ? $_GET['start_date'] : '';
+$end_date = isset($_GET['end_date']) ? $_GET['end_date'] : '';
+
 // Query to fetch data from requested_itineraries table
 $sql = "SELECT * FROM requested_itineraries";
+if ($start_date && $end_date) {
+    $sql .= " WHERE start_date >= '$start_date' AND end_date <= '$end_date'";
+}
+
 $result = $conn->query($sql);
 
 $itineraries = [];

@@ -51,7 +51,18 @@
         <main class="content"> 
             <img src="rm_clients_title.svg" alt="Home Title" class="requested-record-img">
 
+            <div class="requested-record-main-container">
+            <div class="date-filter">
+                <label for="start-date">Start Date:</label>
+                <input type="date" id="start-date">
+                
+                <label for="end-date">End Date:</label>
+                <input type="date" id="end-date">
+                
+                <button id="filter-btn">Filter</button>
+            </div>
             <div class="requested-record-container"></div>
+        </div>
         
     <script src="rm_requested_record.js"></script>
 

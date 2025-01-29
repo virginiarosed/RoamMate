@@ -220,15 +220,23 @@ body, html {
 }
 
 /* Container Layout */
+.requested-record-main-container {
+    border: 4px solid #BC6C25;
+    border-radius: 20px;
+    background-color: #FEFAE0;
+    padding: 30px;
+}
+
+.requested-record-container > * {
+    display: block;
+    width: 100%;
+}
+
 .requested-record-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
     margin-top: 20px;
-    border: 4px solid #BC6C25;
-    border-radius: 20px;
-    background-color: #FEFAE0;
-    padding: 20px;
 }
 
 .requested-record-container > * {
@@ -717,6 +725,70 @@ tr:hover {
     background-color: #DDA15E;
 }
 
+/* Label Styling */
+.date-filter label {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #BC6C25;
+    margin-right: 5px;
+    font-family: 'Montserrat-Medium', sans-serif;
+}
+
+/* Input Fields Styling */
+.date-filter input[type="date"] {
+    padding: 4px 8px;
+    font-size: 14px;
+    margin-bottom: 12px; /* Space between the inputs */
+    width: 100%;
+    max-width: 130px; /* Limit width */
+    border: 1px solid #BC6C25; /* Light border */
+    border-radius: 5px; /* Rounded edges */
+    background-color: #fff; /* White background */
+    color: #333; /* Text color */
+    transition: border-color 0.3s ease-in-out;
+    font-family: 'Montserrat-Medium', sans-serif;
+}
+
+/* Input Fields Focus Effect */
+.date-filter input[type="date"]:focus {
+    border-color: #BC6C25; /* Change border color when focused */
+    outline: none; /* Remove default outline */
+}
+
+/* Button Styling */
+#filter-btn {
+    background-color: #BC6C25;
+    color: white;
+    padding: 5px 10px;
+    font-family: 'Montserrat-Medium', sans-serif;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+/* Button Hover Effect */
+#filter-btn:hover {
+    background-color: #DDA15E; /* Darker blue on hover */
+}
+
+/* Button Disabled (clear button or no filter applied) */
+#filter-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 600px) {
+    .date-filter {
+    display: flex;
+    flex-direction: column; /* Stack the elements vertically */
+    align-items: flex-start;
+    }
+}
+
 @media screen and (max-width: 1024px) {
     .html, body {
         height: 100%; /* Ensure the body and html take up the full height */
@@ -824,7 +896,7 @@ tr:hover {
         height: auto;    /* Maintain aspect ratio */
         margin-bottom: 10px;
     }
-    .requested-record-container {
+    .requested-record-main-container {
         display: grid;
         grid-template-columns: 1fr; /* One item per row */
         gap: 20px; /* Maintain the gap between items */
@@ -833,6 +905,12 @@ tr:hover {
         border-radius: 20px;
         background-color: #FEFAE0;
         padding: 20px;
+    }
+    .requested-record-container {
+        display: grid;
+        grid-template-columns: 1fr; /* One item per row */
+        gap: 20px; /* Maintain the gap between items */
+        margin-top: 20px;
     }
     .modal-content {
         width: 90%;  /* Use 80% width */

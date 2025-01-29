@@ -917,6 +917,32 @@ input[type="number"] {
     top: 120px;
 }
 
+.toast.success {
+    background-color: green;
+    color: white;  /* Make the text white for contrast */
+    padding: 10px 20px;
+    position: fixed;
+    top: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 5px;
+    font-size: 16px;
+    z-index: 1000;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+    max-width: 300px;
+    width: 100%;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 /* Animation for the toast */
 @keyframes fadeInOut {
     0% {

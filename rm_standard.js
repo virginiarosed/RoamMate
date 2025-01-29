@@ -378,33 +378,52 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     
         // Proceed with deletion if the user confirms
-        confirmButton.addEventListener('click', () => {
-            fetch(`delete_itinerary.php?id=${itineraryId}`, {
-                method: 'DELETE'
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Remove the deleted itinerary from the frontend
-                    alert('Itinerary deleted successfully');
-                    // Close the modal
-                    modal.style.display = 'none';
-                    // Optionally, remove the itinerary from the list if it's displayed elsewhere
-                    const itineraryButton = document.querySelector(`[data-id="${itineraryId}"]`);
-                    if (itineraryButton) {
-                        itineraryButton.remove(); // Remove the itinerary button
-                    }
-                } else {
-                    alert('Error deleting itinerary');
-                }
-            })
-            .catch(error => {
-                console.error('Error deleting itinerary:', error);
-                alert('An error occurred while deleting the itinerary');
-                modal.style.display = 'none';
-            });
-        });
+confirmButton.addEventListener('click', () => {
+    fetch(`delete_itinerary.php?id=${itineraryId}`, {
+        method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Show the success toast
+            showSuccessToast('Itinerary deleted successfully');
+            
+            // Close the modal
+            modal.style.display = 'none';
+
+            // Optionally, remove the itinerary from the list if it's displayed elsewhere
+            const itineraryButton = document.querySelector(`[data-id="${itineraryId}"]`);
+            if (itineraryButton) {
+                itineraryButton.remove(); // Remove the itinerary button
+            }
+        } else {
+            alert('Error deleting itinerary');
+        }
+    })
+    .catch(error => {
+        console.error('Error deleting itinerary:', error);
+        alert('An error occurred while deleting the itinerary');
+        modal.style.display = 'none';
+    });
+});
     }
+
+// New function to show a success toast and reload the page after it disappears
+function showSuccessToast(message) {
+    // Create the toast container div
+    const toast = document.createElement('div');
+    toast.classList.add('toast', 'success');
+    toast.innerHTML = message;
+
+    // Append the toast to the body or a specific container
+    document.body.appendChild(toast);
+
+    // Remove the toast after 3 seconds and reload the page
+    setTimeout(() => {
+        toast.remove();  // Remove the toast
+        window.location.reload();  // Reload the page
+    }, 3000);
+}
 
 function updateDurationTextAndDays() {
     const days = document.getElementById("duration-days").value;

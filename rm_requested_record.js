@@ -1,6 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
     const container = document.querySelector('.requested-record-container');
+    const filterButton = document.getElementById('filter-btn');
+    const startDateInput = document.getElementById('start-date');
+    const endDateInput = document.getElementById('end-date');
 
+    // Function to format the date range
     function formatDateRange(startDate, endDate) {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
         const start = new Date(startDate).toLocaleDateString('en-US', options);
@@ -8,36 +12,156 @@ document.addEventListener("DOMContentLoaded", function () {
         return `${start} - ${end}`;
     }
 
-    fetch('fetch_requested_itineraries.php')
-    .then(response => response.json())
-    .then(data => {
-        data.forEach(itinerary => {
-            const formattedDates = formatDateRange(itinerary.start_date, itinerary.end_date);
+    // Function to check if two date ranges overlap
+    function isDateRangeOverlap(itineraryStart, itineraryEnd, filterStart, filterEnd) {
+        const itineraryStartDate = new Date(itineraryStart);
+        const itineraryEndDate = new Date(itineraryEnd);
+        const filterStartDate = new Date(filterStart);
+        const filterEndDate = new Date(filterEnd);
 
-            const itineraryWidget = document.createElement('div');
-            itineraryWidget.classList.add('itinerary-widget');
-            itineraryWidget.innerHTML = `
-                <div class="widget-content">
-                    <h4>${itinerary.client_name}</h4>
-                    <p><strong>Destination:</strong> ${itinerary.destination}</p>
-                    <p><strong>Date:</strong> ${formattedDates}</p>
-                    <p><strong>Duration:</strong> ${itinerary.formatted_duration}</p>
-                    <p><strong>Lodging:</strong> ${itinerary.lodging}</p>
-                </div>
-                <button class="edit-details-btn" data-id="${itinerary.id}">Edit</button>
-                <button class="view-details-btn" data-id="${itinerary.id}">View Details</button>
-            `;
-            container.appendChild(itineraryWidget);
+        // Check if there is an overlap between the two date ranges
+        return (itineraryStartDate <= filterEndDate && itineraryEndDate >= filterStartDate);
+    }
 
-            itineraryWidget.querySelector('.view-details-btn').addEventListener('click', function () {
-                showItineraryDetails(itinerary.id, data);
+    // Function to fetch and display itineraries
+    function fetchItineraries(startDate = '', endDate = '') {
+        fetch('fetch_requested_itineraries.php')
+        .then(response => response.json())
+        .then(data => {
+            // Clear the previous results
+            container.innerHTML = '';
+
+            // Loop through the data and create the itinerary widgets
+            data.forEach(itinerary => {
+                // Check if itinerary's date range overlaps with the filter date range
+                if (startDate && endDate) {
+                    if (isDateRangeOverlap(itinerary.start_date, itinerary.end_date, startDate, endDate)) {
+                        const formattedDates = formatDateRange(itinerary.start_date, itinerary.end_date);
+
+                        const itineraryWidget = document.createElement('div');
+                        itineraryWidget.classList.add('itinerary-widget');
+                        itineraryWidget.innerHTML = `
+                            <div class="widget-content">
+                                <h4>${itinerary.client_name}</h4>
+                                <p><strong>Destination:</strong> ${itinerary.destination}</p>
+                                <p><strong>Date:</strong> ${formattedDates}</p>
+                                <p><strong>Duration:</strong> ${itinerary.formatted_duration}</p>
+                                <p><strong>Lodging:</strong> ${itinerary.lodging}</p>
+                            </div>
+                            <button class="edit-details-btn" data-id="${itinerary.id}">Edit</button>
+                            <button class="view-details-btn" data-id="${itinerary.id}">View Details</button>
+                        `;
+                        container.appendChild(itineraryWidget);
+
+                        // Add event listeners for View and Edit buttons
+                        itineraryWidget.querySelector('.view-details-btn').addEventListener('click', function () {
+                            showItineraryDetails(itinerary.id, data);
+                        });
+
+                        itineraryWidget.querySelector('.edit-details-btn').addEventListener('click', function () {
+                            openEditModal(itinerary);
+                        });
+                    }
+                } else {
+                    // No filter applied, display all itineraries
+                    const formattedDates = formatDateRange(itinerary.start_date, itinerary.end_date);
+
+                    const itineraryWidget = document.createElement('div');
+                    itineraryWidget.classList.add('itinerary-widget');
+                    itineraryWidget.innerHTML = `
+                        <div class="widget-content">
+                            <h4>${itinerary.client_name}</h4>
+                            <p><strong>Destination:</strong> ${itinerary.destination}</p>
+                            <p><strong>Date:</strong> ${formattedDates}</p>
+                            <p><strong>Duration:</strong> ${itinerary.formatted_duration}</p>
+                            <p><strong>Lodging:</strong> ${itinerary.lodging}</p>
+                        </div>
+                        <button class="edit-details-btn" data-id="${itinerary.id}">Edit</button>
+                        <button class="view-details-btn" data-id="${itinerary.id}">View Details</button>
+                    `;
+                    container.appendChild(itineraryWidget);
+
+                    // Add event listeners for View and Edit buttons
+                    itineraryWidget.querySelector('.view-details-btn').addEventListener('click', function () {
+                        showItineraryDetails(itinerary.id, data);
+                    });
+
+                    itineraryWidget.querySelector('.edit-details-btn').addEventListener('click', function () {
+                        openEditModal(itinerary);
+                    });
+                }
             });
-
-            itineraryWidget.querySelector('.edit-details-btn').addEventListener('click', function () {
-                openEditModal(itinerary);
-            });
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+            alert('Failed to fetch itineraries.');
         });
+    }
+
+    // Initial fetch to display all itineraries on page load
+    fetchItineraries();
+
+    // Handle filter button click
+    filterButton.addEventListener('click', function () {
+        const startDate = startDateInput.value;
+        const endDate = endDateInput.value;
+
+        // If no dates are selected, alert the user
+        if (!startDate || !endDate) {
+            alert('Please select both start and end dates.');
+            return;
+        }
+
+        // Fetch and display filtered itineraries
+        fetchItineraries(startDate, endDate);
+
+        // Change the button text to "Clear"
+        filterButton.textContent = 'Clear';
+
+        // Add event listener for the "Clear" button
+        filterButton.removeEventListener('click', handleFilterClick);  // Remove filter handler
+        filterButton.addEventListener('click', handleClearClick); // Add clear handler
     });
+
+    // Handle clear button click
+    function handleClearClick() {
+        // Reset the date inputs
+        startDateInput.value = '';
+        endDateInput.value = '';
+
+        // Fetch and display all itineraries again
+        fetchItineraries();
+
+        // Change the button text back to "Filter"
+        filterButton.textContent = 'Filter';
+
+        // Add event listener for the "Filter" button
+        filterButton.removeEventListener('click', handleClearClick);  // Remove clear handler
+        filterButton.addEventListener('click', handleFilterClick); // Add filter handler back
+    }
+
+    // Handle the filter button click event (before "Clear" button is activated)
+    function handleFilterClick() {
+        const startDate = startDateInput.value;
+        const endDate = endDateInput.value;
+
+        // If no dates are selected, alert the user
+        if (!startDate || !endDate) {
+            alert('Please select both start and end dates.');
+            return;
+        }
+
+        // Fetch and display filtered itineraries
+        fetchItineraries(startDate, endDate);
+
+        // Change the button text to "Clear"
+        filterButton.textContent = 'Clear';
+
+        // Add event listener for the "Clear" button
+        filterButton.removeEventListener('click', handleFilterClick);  // Remove filter handler
+        filterButton.addEventListener('click', handleClearClick); // Add clear handler
+    }
+});
 
     function openEditModal(itinerary) {
         const modal = document.createElement('div');
@@ -147,9 +271,6 @@ document.addEventListener("DOMContentLoaded", function () {
             showToast('Failed to update itinerary', 'error');
         });
     }
-    
-});
-
 
 // Function to convert 24-hour time to 12-hour format
 function convertTo12HourFormat(time) {
