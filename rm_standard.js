@@ -480,9 +480,9 @@ function updateDurationTextAndDays() {
         newTimeContainer.dataset.day = dayNumber;
 
         newTimeContainer.innerHTML = `
-            <input type="time" id="time-range-${dayNumber}-${timeInputs + 1}" name="time_range[${dayNumber}][]">
-            <input type="time" id="time-range-end-${dayNumber}-${timeInputs + 1}" name="time_range[${dayNumber}][]" disabled>
-            <input type="text" id="activity-${dayNumber}-${timeInputs + 1}" name="activity[${dayNumber}][]" placeholder="Activity...">
+            <input type="time" id="time-range-${dayNumber}-${timeInputs + 1}" name="time_range[${dayNumber}][]" required>
+            <input type="time" id="time-range-end-${dayNumber}-${timeInputs + 1}" name="time_range[${dayNumber}][]" required disabled>
+            <input type="text" id="activity-${dayNumber}-${timeInputs + 1}" name="activity[${dayNumber}][]" placeholder="Activity..." required>
             <button type="button" class="delete-time-btn" data-day="${dayNumber}" data-index="${timeInputs + 1}">
                 <i class="fas fa-trash"></i> <!-- Updated delete icon -->
             </button>

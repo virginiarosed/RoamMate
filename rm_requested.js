@@ -96,6 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <button type="button" class="delete-time-btn" data-id="${uniqueId}">
                         <i class="fas fa-trash"></i>
                     </button>
+                    <div class="divider"></div>
                 </div>
             `;
     

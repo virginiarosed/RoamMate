@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Delay the page reload by 3 seconds (to allow the toast to fade)
                 setTimeout(() => {
                     location.reload(); // Reload the page after the toast fades
-                }, 3000); // Adjust time to match your toast's duration
+                }, 2000); // Adjust time to match your toast's duration
             } else {
                 showToast('Error updating itinerary', 'error');
             }
@@ -411,39 +411,87 @@ function updateDayDetails(updatedDayData, modal) {
 
 /// Function to delete requested itinerary
 function deleteItinerary(itineraryId, modal) {
-    // Show a confirmation prompt
-    const isConfirmed = confirm("Are you sure you want to delete this itinerary?");
-   
-    // If the user confirms, proceed with the deletion
-    if (isConfirmed) {
+    // Create the delete confirmation modal
+    const confirmModal = document.createElement('div');
+    confirmModal.classList.add('modal', 'confirmation-modal');
+    
+    // Modal content for confirmation
+    confirmModal.innerHTML = `
+        <div class="modal-content" style="width: 80%; max-width: 400px; margin-top: 150px;">
+            <span class="close">&times;</span>
+            <p style="color: black; font-weight= bolder; font-size: 18px;">Are you sure you want to delete this itinerary?</p>
+            <div class="confirmation-buttons">
+                <button id="confirm-delete" class="confirm-button">Yes, delete it</button>
+                <button id="cancel-delete" class="cancel-button">Cancel</button>
+            </div>
+        </div>
+    `;
+    
+    // Append the modal to the body
+    document.body.appendChild(confirmModal);
+    confirmModal.style.display = 'block';
+    
+    // Close the confirmation modal when clicking on the close button
+    confirmModal.querySelector('.close').addEventListener('click', function () {
+        confirmModal.style.display = 'none';
+        confirmModal.remove();
+    });
+    
+    // Close modal when clicking outside of it
+    window.addEventListener('click', function (event) {
+        if (event.target === confirmModal) {
+            confirmModal.style.display = 'none';
+            confirmModal.remove();
+        }
+    });
+    
+    // Handle the "Confirm" button click
+    confirmModal.querySelector('#confirm-delete').addEventListener('click', function () {
+        // Proceed with the itinerary deletion
         fetch(`delete_requested_itinerary.php?id=${itineraryId}`, {
             method: 'DELETE'
         })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Remove the deleted itinerary from the frontend
-                alert('Itinerary deleted successfully');
-                // Close the modal
+                // Use the toast for success
+                showToast('Itinerary deleted successfully', 'success');
+                
+                // Close and remove the modal
                 modal.style.display = 'none';
                 modal.remove();
-                // Optionally, remove the itinerary from the list if it's displayed elsewhere
+                
+                // Optionally, remove the deleted itinerary from the list if it's displayed elsewhere
                 const itineraryButton = document.querySelector(`[data-id="${itineraryId}"]`);
                 if (itineraryButton) {
-                    itineraryButton.remove(); // Remove the itinerary button
+                    itineraryButton.remove();
                 }
+                
+                // Reload the page after the toast disappears (3 seconds after showing the toast)
+                setTimeout(() => {
+                    location.reload(); // This reloads the page
+                }, 2000); // Adjust time to match your toast's duration
             } else {
-                alert('Error deleting itinerary');
+                showToast('Error deleting itinerary', 'error');
             }
+            // Close and remove the confirmation modal
+            confirmModal.style.display = 'none';
+            confirmModal.remove();
         })
         .catch(error => {
             console.error('Error deleting itinerary:', error);
-            alert('An error occurred while deleting the itinerary');
+            showToast('An error occurred while deleting the itinerary', 'error');
+            confirmModal.style.display = 'none';
+            confirmModal.remove();
         });
-    } else {
-        // If the user cancels, do nothing
-        console.log("Deletion cancelled");
-    }
+    });
+    
+    // Handle the "Cancel" button click
+    confirmModal.querySelector('#cancel-delete').addEventListener('click', function () {
+        // Just close the modal and do nothing
+        confirmModal.style.display = 'none';
+        confirmModal.remove();
+    });
 }
 
 

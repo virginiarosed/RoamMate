@@ -33,6 +33,113 @@ body, html {
     scrollbar-color: #BC6C25 #FEFAE0;
 }
 
+.header {
+    background-color: #FEFAE0;
+    height: 60px;
+    position: relative;
+    display: none; /* Hide the header by default */
+    border-bottom: 3px solid #BC6C25;
+  }
+  
+  .logo1 img {
+    height: 40px; /* Adjust the logo height */
+    max-width: 100%;
+    object-fit: contain; /* Ensure it looks good in the space */
+    margin-top: 10px;
+    margin-left: 10px;
+  }
+  
+  /* Hamburger Menu Button */
+  .hamburger-menu {
+    font-size: 30px;
+    color: #BC6C25;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    display: none; /* Hide the hamburger menu by default */
+  }
+  
+  /* Navigation Menu */
+  .nav-menu {
+    display: none; /* Hide the navigation menu by default */
+    background-color: #BC6C25;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 250px;
+    height: 100%;
+    padding-top: 50px;
+    margin-top: 57px;
+    text-align: center;
+  }
+  
+  .nav-menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .nav-menu ul li {
+    padding: 10px;
+    display: flex; /* Use flexbox for li */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+  }
+  
+  .nav-menu ul li a {
+    color: #FFF0D9;
+    text-decoration: none;
+    font-size: 20px;
+    display: block;
+    width: 100%; /* Ensure the anchor takes full width */
+    text-align: center; /* Center text inside the anchor */
+  }
+  
+  .divider2 {
+    grid-column: 1 / -1; /* Span across all columns */
+    width: 80%;
+    height: 1px;
+    background-color: #FEFAE0; /* Set color for the divider */
+    margin: 10px auto; /* Center horizontally and add vertical spacing */
+  }
+  
+  .nav-menu ul li a:hover {
+    background-color: #DDA15E;
+    border-radius: 20px;
+  }
+  
+  /* Show the header and menu on small screens */
+  @media (max-width: 768px) {
+    .header {
+      display: block; /* Show header on small screens */
+    }
+  
+    .hamburger-menu {
+      display: block; /* Show hamburger menu */
+    }
+  
+    .nav-menu.active {
+      display: block; /* Show the navigation menu when active */
+    }
+  }
+  
+  /* Hide the header and hamburger menu on larger screens */
+  @media (min-width: 769px) {
+    .header {
+      display: none; /* Hide the header */
+    }
+  
+    .hamburger-menu {
+      display: none; /* Hide the hamburger menu */
+    }
+  
+    .nav-menu {
+      display: none; /* Hide the navigation menu */
+    }
+  }
+
 /* Container and sidebar layout */
 .container {
     display: flex;
@@ -559,5 +666,308 @@ input[type="number"] {
     100% {
         opacity: 0;
         transform: translateY(20px);
+    }
+}
+
+@media (min-width: 900px) and (max-width: 1024px) {
+    .html, body {
+        height: 100%; /* Ensure the body and html take up the full height */
+        overflow: auto; /* Ensure overflow is allowed */
+    }
+
+    .sidebar {
+        width: 100px;
+        display: block;  /* Show sidebar */
+        overflow: visible;
+    }
+    .container {
+        display: flex;
+        overflow: auto;
+    }
+    .content {
+        width: 100%;  /* Take 70% width for the content */
+        padding: 20px;  /* Adjust padding */
+        height: auto;  /* Allow content to expand based on its size */
+    }
+    .requested-img {
+        max-width: 100%;  
+        height: auto;  /* Maintain aspect ratio */
+    }
+    .itinerary-container {
+        display: block;  /* Stack the elements */
+    }
+    .itinerary-form {
+        width: 100%;  /* Ensure the form takes full width */
+        margin-bottom: 20px;  /* Add margin to separate it from the display */
+    }
+
+    .itinerary-form label {
+        font-size: 20px; /* Adjust for smaller screens */
+    }
+
+    .itinerary-form textarea {
+        font-size: 17px;  /* Adjust the font size */
+        width: 100%;      /* Make textarea take up the full width of its container */
+        height: 35px;    /* Increase height to a desired value */
+    }
+    .form-group input[type="number"] {
+        font-size: 17px;  /* Adjust the font size */
+        width: 100%;      /* Make input take the full width of its container */
+        height: 35px;     /* Increase height */
+    }
+    .form-row {
+        flex-direction: column; /* Stack form groups vertically */
+        gap: 1px; /* Control the spacing between the form groups */
+    }
+    .form-group {
+        margin-bottom: 10px; /* Adjust the bottom margin for each form group */
+    }
+
+    #duration-text {
+        font-size: 20px; /* Increase font size */
+    }
+    h3 {
+        font-size: 30px;  /* Increase font size */
+    }
+    .day-container input[type="time"] {
+        font-size: 20px;
+        width: 24%
+    }
+    .day-container input[type="text"] {
+        font-size: 20px;
+        grid-column: 1 / 3; /* Occupy the first two columns */
+        width: 120%;
+        padding: 20px;
+    }
+    .add-time-btn {
+        font-size: 15px;      /* Increase font size */
+        padding: 10px 15px;   /* Increase padding */
+        border-radius: 8px;   /* Optionally, adjust the border-radius for a larger button */
+    }
+
+    .itinerary-display {
+        width: 100%;  /* Ensure the display takes full width */
+    }
+    .itinerary-form h1 {
+        font-size: 50px;  /* Adjust the font size */
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .html, body {
+        height: 100%; /* Ensure the body and html take up the full height */
+        overflow: auto; /* Ensure overflow is allowed */
+    }
+
+    .sidebar {
+        width: 100px;
+        display: block;  /* Show sidebar */
+        overflow: visible;
+    }
+    .container {
+        display: flex;
+        overflow: auto;
+    }
+    .content {
+        width: 100%;  /* Take 70% width for the content */
+        padding: 20px;  /* Adjust padding */
+        height: auto;  /* Allow content to expand based on its size */
+    }
+    .requested-img {
+        max-width: 100%;  
+        height: auto;  /* Maintain aspect ratio */
+    }
+    .itinerary-container {
+        display: block;  /* Stack the elements */
+    }
+    .itinerary-form {
+        width: 100%;  /* Ensure the form takes full width */
+        margin-bottom: 20px;  /* Add margin to separate it from the display */
+    }
+
+    .itinerary-form label {
+        font-size: 20px; /* Adjust for smaller screens */
+    }
+
+    .itinerary-form textarea {
+        font-size: 17px;  /* Adjust the font size */
+        width: 100%;      /* Make textarea take up the full width of its container */
+        height: 35px;    /* Increase height to a desired value */
+    }
+    .form-group input[type="number"] {
+        font-size: 17px;  /* Adjust the font size */
+        width: 100%;      /* Make input take the full width of its container */
+        height: 35px;     /* Increase height */
+    }
+    .form-row {
+        flex-direction: column; /* Stack form groups vertically */
+        gap: 1px; /* Control the spacing between the form groups */
+    }
+    .form-group {
+        margin-bottom: 10px; /* Adjust the bottom margin for each form group */
+    }
+
+    #duration-text {
+        font-size: 20px; /* Increase font size */
+    }
+    h3 {
+        font-size: 30px;  /* Increase font size */
+    }
+    .day-container input[type="time"] {
+        font-size: 20px;
+        width: 24%
+    }
+    .day-container input[type="text"] {
+        font-size: 20px;
+        grid-column: 1 / 3; /* Occupy the first two columns */
+        width: 120%;
+        padding: 20px;
+    }
+    .add-time-btn {
+        font-size: 15px;      /* Increase font size */
+        padding: 10px 15px;   /* Increase padding */
+        border-radius: 8px;   /* Optionally, adjust the border-radius for a larger button */
+    }
+
+    .itinerary-display {
+        width: 100%;  /* Ensure the display takes full width */
+    }
+    .itinerary-form h1 {
+        font-size: 50px;  /* Adjust the font size */
+    }
+}
+
+@media (max-width: 768px) {
+    body, html {
+        overflow: auto;
+    }
+    .sidebar {
+        display: none;  /* Hide sidebar */
+    }
+    .container {
+        display: block;  /* Stack the content */
+        border: none;
+    }
+    .content {
+        width: 100%; /* Full width for content */
+        padding: 20px; /* Adjust padding if necessary */
+        height: 100vh;
+    }
+    .requested-img {
+        max-width: 100%;  
+        height: auto;    /* Maintain aspect ratio */
+        margin-bottom: 10px;
+    }
+    .itinerary-container {
+        display: block;  /* Stack the elements */
+        min-height: 40vh;
+    }
+    .itinerary-form {
+        width: 100%; /* Ensure the form takes full width */
+        margin-bottom: 20px; /* Add margin to separate it from the display */
+
+    }
+    .itinerary-form label {
+        font-size: 16px; /* Adjust for smaller screens */
+    }
+    .itinerary-form textarea {
+        font-size: 13px;  /* Adjust the font size */
+        padding: -20px;
+        width: 100%;      /* Make textarea take up the full width of its container */
+        height: 30px;    /* Increase height to a desired value */
+    }
+    .form-group input[type="number"] {
+        font-size: 14px;  /* Adjust the font size */
+        padding: 12px;    /* Add padding for better appearance */
+        width: 100%;      /* Make input take the full width of its container */
+        height: 25px;     /* Increase height */
+    }
+    #duration-text {
+        font-size: 16px; /* Increase font size */
+    }
+    h3 {
+        font-size: 20px;  /* Increase font size */
+    }
+    .day-container input[type="time"] {
+        font-size: 20px;
+        width: 24%
+    }
+    .day-container input[type="text"] {
+        font-size: 20px;
+        grid-column: 1 / 3; /* Occupy the first two columns */
+        width: 120%;
+        padding: 20px;
+    }
+    .add-time-btn {
+        font-size: 14px;      /* Increase font size */
+        padding: 8px 16px;   /* Increase padding */
+        border-radius: 8px;   /* Optionally, adjust the border-radius for a larger button */
+    }
+    .day-container input[type="time"] {
+        font-size: 14px;
+        width: 18%
+    }
+    .day-container input[type="text"] {
+        font-size: 14px;
+        grid-column: 1 / 3; /* Occupy the first two columns */
+        width: 120%;
+        padding: 14px;
+    }
+    .add-time-btn {
+        font-size: 12px;      /* Increase font size */
+        padding: 6px 14px;   /* Increase padding */
+        border-radius: 8px;   /* Optionally, adjust the border-radius for a larger button */
+    }
+    .itinerary-display {
+        width: 100%; /* Ensure the display takes full width */
+    }
+    .itinerary-form h1 {
+        font-size: 24px;  /* Adjust this value to decrease the font size */
+    }
+    .add-itinerary-btn {
+        font-size: 14px; /* Increase font size */
+        padding: 9px 19px; /* Increase padding for larger button */
+    }
+    .form-row {
+        flex-direction: column; /* Stack form groups vertically */
+        gap: 1px; /* Control the spacing between the form groups */
+    }
+    .form-group {
+        margin-bottom: 10px; /* Adjust the bottom margin for each form group */
+    }
+    .day-container .form-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr auto; /* Add a third column for the button */
+        gap: 10px; /* Maintain spacing between elements */
+        align-items: center; /* Align items vertically */
+    }
+
+    /* Ensure the activity input and delete button share the row */
+    .day-container input[type="text"] {
+        grid-column: 1 / 3; /* Occupy the first two columns */
+        width: 90%;
+    }
+
+    .day-container .delete-time-btn {
+        grid-column: 3; /* Place the button in the third column */
+        justify-self: start; /* Align the button to the start of its column */
+        margin-left: -35px; /* Adjust the value to move the button slightly left */
+    }
+
+    /* Ensure time inputs remain in their own row */
+    .day-container input[type="time"] {
+        width: 100%; /* Keep responsive */
+    }
+
+    .day-container .divider {
+        grid-column: 1 / -1; /* Span across all columns */
+        width: 100%;
+        height: 1px;
+        background-color: #BC6C25; /* Set color for the divider */
+        margin: 10px 0; /* Add spacing around the divider */
+    }
+
+    .container {
+        border: none; /* Removes the border on screens smaller than 768px */
     }
 }

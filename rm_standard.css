@@ -904,6 +904,17 @@ input[type="number"] {
     opacity: 0;
     animation: fadeInOut 3s forwards;
     z-index: 999;
+    top: 120px;
+}
+
+.toast.success {
+    background-color: green;
+    top: 120px;
+}
+
+.toast.error {
+    background-color: red;
+    top: 120px;
 }
 
 /* Animation for the toast */
@@ -926,13 +937,20 @@ input[type="number"] {
     }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1024px) {
+    .html, body {
+        height: 100%; /* Ensure the body and html take up the full height */
+        overflow: auto; /* Ensure overflow is allowed */
+    }
+
     .sidebar {
         width: 100px;
         display: block;  /* Show sidebar */
+        overflow: visible;
     }
     .container {
-        display: flex;  /* Use flexbox layout */
+        display: flex;
+        overflow: auto;
     }
     .content {
         width: 100%;  /* Take 70% width for the content */
@@ -945,6 +963,41 @@ input[type="number"] {
     }
     .itinerary-container {
         display: block;  /* Stack the elements */
+        min-height: 100vh;
+    }
+
+    .itinerary-display {
+        margin-top: 15px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .html, body {
+        height: 100%; /* Ensure the body and html take up the full height */
+        overflow: auto; /* Ensure overflow is allowed */
+    }
+
+    .sidebar {
+        width: 100px;
+        display: block;  /* Show sidebar */
+        overflow: visible;
+    }
+    .container {
+        display: flex;
+        overflow: auto;
+    }
+    .content {
+        width: 100%;  /* Take 70% width for the content */
+        padding: 20px;  /* Adjust padding */
+        height: auto;  /* Allow content to expand based on its size */
+    }
+    .standard-img {
+        max-width: 100%;  
+        height: auto;  /* Maintain aspect ratio */
+    }
+    .itinerary-container {
+        display: block;  /* Stack the elements */
+        min-height: 100vh;
     }
     .itinerary-form {
         width: 100%;  /* Ensure the form takes full width */
@@ -952,20 +1005,18 @@ input[type="number"] {
     }
 
     .itinerary-form label {
-        font-size: 28px; /* Adjust for smaller screens */
+        font-size: 20px; /* Adjust for smaller screens */
     }
 
     .itinerary-form textarea {
-        font-size: 25px;  /* Adjust the font size */
-        padding: 5px;    /* Adjust padding */
+        font-size: 17px;  /* Adjust the font size */
         width: 100%;      /* Make textarea take up the full width of its container */
-        height: 50px;    /* Increase height to a desired value */
+        height: 35px;    /* Increase height to a desired value */
     }
     .form-group input[type="number"] {
-        font-size: 25px;  /* Adjust the font size */
-        padding: 12px;    /* Add padding for better appearance */
+        font-size: 17px;  /* Adjust the font size */
         width: 100%;      /* Make input take the full width of its container */
-        height: 50px;     /* Increase height */
+        height: 35px;     /* Increase height */
     }
     .form-row {
         flex-direction: column; /* Stack form groups vertically */
@@ -976,7 +1027,7 @@ input[type="number"] {
     }
 
     #duration-text {
-        font-size: 25px; /* Increase font size */
+        font-size: 20px; /* Increase font size */
     }
     h3 {
         font-size: 30px;  /* Increase font size */
@@ -992,8 +1043,8 @@ input[type="number"] {
         padding: 20px;
     }
     .add-time-btn {
-        font-size: 18px;      /* Increase font size */
-        padding: 12px 20px;   /* Increase padding */
+        font-size: 15px;      /* Increase font size */
+        padding: 10px 15px;   /* Increase padding */
         border-radius: 8px;   /* Optionally, adjust the border-radius for a larger button */
     }
 
@@ -1009,8 +1060,8 @@ input[type="number"] {
     }
 
     .itinerary-btn {
-        padding: 16px 21px;  /* Standard padding */
-        font-size: 25px;     /* Standard font size */
+        padding: 12px 17px;  /* Standard padding */
+        font-size: 20px;     /* Standard font size */
     }
     .modal-content {
         width: 90%;  /* Use 80% width */
@@ -1042,8 +1093,8 @@ input[type="number"] {
         font-size: 14px;    /* Standard font size */
     }
     .add-itinerary-btn {
-        font-size: 25px; /* Increase font size */
-        padding: 15px 25px; /* Increase padding for larger button */
+        font-size: 20px; /* Increase font size */
+        padding: 10px 20px; /* Increase padding for larger button */
     }
 }
 
@@ -1175,7 +1226,7 @@ input[type="number"] {
         grid-column: 1 / -1; /* Span across all columns */
         width: 100%;
         height: 1px;
-        background-color: #585D27; /* Set color for the divider */
+        background-color: #BC6C25; /* Set color for the divider */
         margin: 10px 0; /* Add spacing around the divider */
     }
 
@@ -1187,7 +1238,7 @@ input[type="number"] {
         width: 90%;         /* Increase the width to 90% */
         padding: 20px;      /* Increase the padding */
         max-width: none;    /* Remove the max-width limit */
-        border: 7px solid #585D27;
+        border: 7px solid #BC6C25;
     }
     .modal-content h1 {
         font-size: 50px;
@@ -1213,5 +1264,23 @@ input[type="number"] {
     }
     .container {
         border: none; /* Removes the border on screens smaller than 768px */
-      }
+    }
+    .time-container {
+        display: block !important; /* Force the fields to stack vertically */
+        width: 100% !important;    /* Ensure it takes up the full width */
+    }
+
+    .time-container .form-group {
+        width: 100% !important;        /* Ensure the form groups take full width */
+        margin-bottom: 15px !important; /* Add space between the fields */
+    }
+
+    .time-container .form-group label {
+        display: block !important;     /* Ensure the label is above the input */
+        margin-bottom: 5px !important; /* Space between label and input */
+    }
+
+    .time-container .form-group input[type="time"] {
+        width: 100% !important;
+    }
 }

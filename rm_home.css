@@ -444,69 +444,7 @@ body, html {
     color: #BC6C25; 
 }
 
-@media screen and (max-width: 900px) {
-    body, html {
-        overflow: auto;
-    }
-
-    .sidebar {
-        width: 100px;
-        display: block;  /* Show sidebar */
-    }
-    .container {
-        display: flex;  /* Use flexbox layout */
-    }
-    .content {
-        width: 100%;  /* Take 70% width for the content */
-        padding: 20px;  /* Adjust padding */
-        height: auto;  /* Allow content to expand based on its size */
-    }
-
-    .image-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: stretch; 
-        background-color: #FEFAE0;
-        border: 4px solid #BC6C25;
-        border-radius: 15px;
-        height: 10vh; 
-        margin-top: 50px;
-        margin-bottom: 50px;
-    }
-    
-    .left-part {
-        width: 30%;
-        display: flex;
-        justify-content: center;
-        align-items: center; 
-        padding: 10px;
-        height: 100%; 
-    }
-    
-    .left-part img {
-        max-width: 110%;
-        height: auto;
-    }
-    
-    .right-part {
-        width: 70%;
-        display: flex;
-        justify-content: center;
-        align-items: center; 
-        padding: 20px;
-        background-color: #BC6C25;
-        flex-grow: 1; 
-        height: 100%; 
-    }
-    
-    .right-part img {
-        max-width: 50%;
-        height: auto;
-    }
-
-}
-
-@media (max-width: 768px) {
+@media (max-width: 600px) {
     body, html {
         overflow: auto;
     }
@@ -608,5 +546,227 @@ body, html {
     .button img {
         max-width: 20%; /* Decrease image size */
         height: auto; /* Maintain aspect ratio */
+    }
+}
+
+@media (max-width: 768px) {
+    body, html {
+        overflow: auto;
+    }
+    .sidebar {
+        display: none;  /* Hide sidebar */
+    }
+    .container {
+        display: block;  /* Stack the content */
+        border: none;
+    }
+    .content {
+        width: 100%; /* Full width for content */
+        padding: 20px; /* Adjust padding if necessary */
+        height: 100vh;
+    }
+
+    .image-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: stretch; 
+        background-color: #FEFAE0;
+        border: 4px solid #BC6C25;
+        border-radius: 15px;
+        height: 15vh;
+        margin-top: 1px;
+        margin-bottom: 50px;
+    }
+    
+    .left-part {
+        width: 30%;
+        display: flex;
+        justify-content: center;
+        align-items: center; 
+        padding: 10px;
+        height: 100%; 
+    }
+    
+    .left-part img {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    .right-part {
+        width: 70%;
+        display: flex;
+        justify-content: center;
+        align-items: center; 
+        padding: 20px;
+        background-color: #BC6C25;
+        flex-grow: 1; 
+        height: 100%; 
+    }
+    
+    .right-part img {
+        max-width: 80%;
+        height: auto;
+    }
+
+    .new-container {
+        flex-direction: column; /* Stack the sections vertically */
+        margin-top: -50px;
+    }
+
+    /* Make the left section and right section take full width */
+    .left-section, .right-section {
+        width: 100%; /* Ensure both sections take full width */
+        margin: 0; /* Remove any margin */
+    }
+
+    /* Adjust the top and bottom parts to take full width and align properly */
+    .top-part, .bottom-part {
+        width: 100%; /* Ensure they take full width */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    /* Adjust the chart container */
+    .chart-container {
+        width: 100%; /* Ensure the chart takes full width */
+        height: 180px; /* Adjust the height if needed */
+        margin-top: -50px;
+        margin-left: 0;
+    }
+
+    /* Optional: Style the buttons inside the stacked layout */
+    .button {
+        width: 100%; /* Ensure buttons take full width */
+    }
+
+    .button span {
+        font-size: 25px; /* Decrease font size for the span */
+    }
+    
+    .button div {
+        font-size: 30px; /* Decrease font size for the div */
+    }
+
+    /* Optional: Adjust image size to maintain consistency */
+    .button img {
+        max-width: 20%; /* Decrease image size */
+        height: auto; /* Maintain aspect ratio */
+    }
+}
+
+@media (min-width: 800px) and (max-width: 1000px) {
+    body, html {
+        overflow: auto;
+    }
+
+    .sidebar {
+        width: 100px;
+        display: block;  /* Show sidebar */
+    }
+    .container {
+        display: flex;  /* Use flexbox layout */
+    }
+    .content {
+        width: 100%;  /* Take 70% width for the content */
+        padding: 20px;  /* Adjust padding */
+        height: auto;  /* Allow content to expand based on its size */
+    }
+
+    .image-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: stretch; 
+        background-color: #FEFAE0;
+        border: 4px solid #BC6C25;
+        border-radius: 15px;
+        height: 10vh; 
+        margin-top: 50px;
+        margin-bottom: 70px;
+    }
+    
+    .left-part {
+        width: 30%;
+        display: flex;
+        justify-content: center;
+        align-items: center; 
+        padding: 10px;
+        height: 100%; 
+    }
+    
+    .left-part img {
+        max-width: 110%;
+        height: auto;
+    }
+    
+    .right-part {
+        width: 70%;
+        display: flex;
+        justify-content: center;
+        align-items: center; 
+        padding: 20px;
+        background-color: #BC6C25;
+        flex-grow: 1; 
+        height: 100%; 
+    }
+    
+    .right-part img {
+        max-width: 50%;
+        height: auto;
+    }
+
+    .new-container {
+        display: flex;
+        flex-direction: row;  /* Display buttons in a row */
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .left-section {
+        display: flex;
+        justify-content: space-between;  /* Align buttons in a row */
+        flex-grow: 1;
+    }
+
+    .top-part, .bottom-part {
+        width: 100%;  /* Make each button take 48% of the width */
+    }
+
+    .button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%; /* Ensure buttons take full width */
+    }
+
+    .button span {
+        font-size: 16px; /* Adjust font size for smaller screens */
+    }
+
+    .button div {
+        font-size: 25px; /* Adjust icon size */
+    }
+
+    .button img {
+        max-width: 15%; /* Adjust image size */
+        height: auto; /* Maintain aspect ratio */
+    }
+
+    /* Make sure chart container comes below the buttons */
+    .right-section {
+        margin-top: 20px;  /* Space between buttons and chart */
+        width: 100%; /* Take full width */
+        display: flex;
+        justify-content: center;  /* Center the chart */
+    }
+
+    .chart-container {
+        width: 100%;  /* Make the chart take full width */
+        height: 300px; /* Adjust height for smaller screens */
+    }
+
+    /* Optional: Adjust image size in chart */
+    .chart-container canvas {
+        width: 100%;  /* Make the chart fill the container */
+        height: 100%; /* Ensure the chart takes full height */
     }
 }
