@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // If no dates are selected, alert the user
         if (!startDate || !endDate) {
-            alert('Please select both start and end dates.');
+            showToast('Please select both start and end dates.', 'error');
             return;
         }
 
@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // If no dates are selected, alert the user
         if (!startDate || !endDate) {
-            alert('Please select both start and end dates.');
+            showToast('Please select both start and end dates.', 'error');
             return;
         }
 

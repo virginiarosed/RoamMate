@@ -37,7 +37,7 @@ if ($result->num_rows === 1) {
     if ($user['failed_attempts'] >= $maxAttempts && $currentTime < $lockoutExpiry) {
         // Send the exact lockout expiry time to the front end
         $lockoutExpiryTimestamp = strtotime($user['lockout_expiry']);
-        header("Location: rm_adminlogin.html?error=Locked&lockout_expiry=$lockoutExpiryTimestamp");
+        header("Location: rm_adminlogin.html?error=Locked&lockout_expiry=$lockoutExpiryTimestamp&email=$email");
         exit();
     }
 
@@ -62,13 +62,13 @@ if ($result->num_rows === 1) {
         $stmt->bind_param("iss", $newFailedAttempts, $lockoutExpiryTime, $email);
         $stmt->execute();
 
-        // Ensure the error message is passed with the redirect
-        header("Location: rm_adminlogin.html?error=Invalid credentials");
+        // Redirect with a more generic error message
+        header("Location: rm_adminlogin.html?error=Password is incorrect&email=$email");
         exit();
     }
 } else {
     // Handle case where email doesn't exist
-    header("Location: rm_adminlogin.html?error=Invalid credentials");
+    header("Location: rm_adminlogin.html?error=Account not registered. Sign up first.");
     exit();
 }
 

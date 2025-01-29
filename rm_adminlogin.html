@@ -61,7 +61,9 @@
     const urlParams = new URLSearchParams(window.location.search);
     const errorMessage = urlParams.get('error');
     const lockoutExpiryTimestamp = urlParams.get('lockout_expiry');
+    const email = urlParams.get('email'); // Get email from the query params
 
+    // Handle error message display
     if (errorMessage) {
         const messageContainer = document.getElementById('error-message-container');
         // Clear any previous content
@@ -72,36 +74,52 @@
             messageContainer.innerHTML = `<div class="error-message">${errorMessage}</div>`;
         }
 
-        if (lockoutExpiryTimestamp) {
-            const lockoutExpiryTime = parseInt(lockoutExpiryTimestamp, 10);
-            const countdownElement = document.createElement('div');
-            countdownElement.classList.add('error-message');
-            countdownElement.id = 'countdown-timer';
-            messageContainer.appendChild(countdownElement);
+        // If email is valid and password is incorrect, retain the email input
+        if (email) {
+            const emailInput = document.querySelector('input[name="email"]');
+            emailInput.value = email;
+        }
 
-            // Function to update the countdown every second
-            const countdownInterval = setInterval(function () {
-                const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
-                const remainingTime = lockoutExpiryTime - currentTime;
-
-                if (remainingTime <= 0) {
-                    clearInterval(countdownInterval); // Stop the countdown
-
-                    // Show the account unlocked message only
-                    countdownElement.innerHTML = '<span style="color: green;">Account unlocked, you can try logging in again.</span>';
-
-                    // Clear query parameters after lockout expires
-                    const newUrl = window.location.origin + window.location.pathname;
-                    window.history.replaceState({}, document.title, newUrl);
-                } else {
-                    const minutesLeft = Math.floor(remainingTime / 60);
-                    const secondsLeft = remainingTime % 60;
-                    countdownElement.innerHTML = `Due to multiple login attempts, the account is locked for ${minutesLeft} minutes and ${secondsLeft} seconds.`;
-                }
-            }, 1000); // Update every second
+        // If login failed (wrong password), clear the password field
+        if (errorMessage === 'Email or password is incorrect') {
+            const passwordInput = document.querySelector('input[name="password"]');
+            passwordInput.value = '';  // Clear password field
         }
     }
+
+    // Handle lockout logic
+    if (lockoutExpiryTimestamp) {
+        const lockoutExpiryTime = parseInt(lockoutExpiryTimestamp, 10);
+        const countdownElement = document.createElement('div');
+        countdownElement.classList.add('error-message');
+        countdownElement.id = 'countdown-timer';
+        const messageContainer = document.getElementById('error-message-container');
+        messageContainer.appendChild(countdownElement);
+
+        // Function to update the countdown every second
+        const countdownInterval = setInterval(function () {
+            const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
+            const remainingTime = lockoutExpiryTime - currentTime;
+
+            if (remainingTime <= 0) {
+                clearInterval(countdownInterval); // Stop the countdown
+
+                // Show the account unlocked message only
+                countdownElement.innerHTML = '<span style="color: green;">Account unlocked, you can try logging in again.</span>';
+
+                // Clear query parameters after lockout expires
+                const newUrl = window.location.origin + window.location.pathname;
+                window.history.replaceState({}, document.title, newUrl);
+            } else {
+                const minutesLeft = Math.floor(remainingTime / 60);
+                const secondsLeft = remainingTime % 60;
+                countdownElement.innerHTML = `Due to multiple login attempts, the account is locked for ${minutesLeft} minutes and ${secondsLeft} seconds.`;
+            }
+        }, 1000); // Update every second
+    }
 };
+
+
 </script>
 
 </body>

@@ -31,15 +31,62 @@ document.addEventListener("DOMContentLoaded", function () {
             // Generate day containers
             generateDayContainers(duration, startDate);
     
-            // Show the "Add Itinerary" button only if there's at least one day-container
-            if (duration > 0) {
+            // Show the "Add Itinerary" button only if all required fields are filled
+            if (duration > 0 && validateAllFields() && validateAllActivities() && validateAllTimeSlots() && hasAddedTimeSlot()) {
                 document.querySelector('.add-itinerary-btn').style.display = 'inline-block';
+            } else {
+                document.querySelector('.add-itinerary-btn').style.display = 'none';
             }
         } else {
             durationText.innerHTML = `<b>Duration:</b> Invalid Dates`;
             mainDayContainer.innerHTML = ""; // Clear day containers
             document.querySelector('.add-itinerary-btn').style.display = 'none'; // Hide the button if dates are invalid
         }
+    }
+
+    // Validate all required fields
+    function validateAllFields() {
+        const requiredFields = document.querySelectorAll("#itinerary-form [required]");
+        let allFieldsValid = true;
+        requiredFields.forEach(field => {
+            if (!field.value.trim()) {
+                allFieldsValid = false;
+                field.classList.add("error"); // Add error class to highlight the field
+            } else {
+                field.classList.remove("error"); // Remove error class if field is valid
+            }
+        });
+        return allFieldsValid;
+    }
+
+    // Validate all activity fields
+    function validateAllActivities() {
+        const activityFields = document.querySelectorAll("input[name^='activity']");
+        let allActivitiesValid = true;
+        activityFields.forEach(field => {
+            if (!field.value.trim()) {
+                allActivitiesValid = false;
+                field.classList.add("error"); // Add error class to highlight the field
+            } else {
+                field.classList.remove("error"); // Remove error class if field is valid
+            }
+        });
+        return allActivitiesValid;
+    }
+
+    // Validate all time slot fields
+    function validateAllTimeSlots() {
+        const timeSlotFields = document.querySelectorAll("input[type='time']");
+        let allTimeSlotsValid = true;
+        timeSlotFields.forEach(field => {
+            if (!field.value.trim()) {
+                allTimeSlotsValid = false;
+                field.classList.add("error"); // Add error class to highlight the field
+            } else {
+                field.classList.remove("error"); // Remove error class if field is valid
+            }
+        });
+        return allTimeSlotsValid;
     }
 
     // Generate day containers dynamically
@@ -76,8 +123,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     
     let endTimes = [];
+    // Track if any "Add Time" button has been clicked
+    let timeSlotAdded = false;
+
+    function hasAddedTimeSlot() {
+        return timeSlotAdded;
+    }
     // Add a new time slot dynamically
     function addTimeSlot(dayNumber, startTime = "", endTime = "", activity = "") {
+      timeSlotAdded = true; // Mark that a time slot has been added
       const timeSlotsContainer = document.getElementById(
         `time-slots-day-${dayNumber}`
       );
@@ -92,7 +146,7 @@ document.addEventListener("DOMContentLoaded", function () {
                <div class="form-group time-slot-row">
                     <input type="time" name="time_range[${dayNumber}][]" required value="${startTime}">
                     <input type="time" name="time_range[${dayNumber}][]" required value="${endTime}" disabled>
-                    <input type="text" name="activity[${dayNumber}][]" placeholder="Activity..." required value="${activity}">
+                    <input type="text" name="activity[${dayNumber}][]" placeholder="Activity *" required value="${activity}">
                     <button type="button" class="delete-time-btn" data-id="${uniqueId}">
                         <i class="fas fa-trash"></i>
                     </button>
@@ -167,7 +221,25 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }
         }
+
+        // Update the "Add Itinerary" button visibility
+        if (validateAllFields() && validateAllActivities() && validateAllTimeSlots() && hasAddedTimeSlot()) {
+            document.querySelector('.add-itinerary-btn').style.display = 'inline-block';
+        } else {
+            document.querySelector('.add-itinerary-btn').style.display = 'none';
+        }
       }
+
+      // Add event listener to validate activity fields on input change
+      timeSlotDiv.querySelectorAll("input").forEach(input => {
+        input.addEventListener("input", () => {
+            if (validateAllFields() && validateAllActivities() && validateAllTimeSlots() && hasAddedTimeSlot()) {
+                document.querySelector('.add-itinerary-btn').style.display = 'inline-block';
+            } else {
+                document.querySelector('.add-itinerary-btn').style.display = 'none';
+            }
+        });
+    });
     }
     
     // Delete a specific time slot
@@ -260,7 +332,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 endTimes.push(endTime); // Ensure end time is correctly captured
                 activities.push(activity);
             });
-        });    
+        });
+
+        // Check if any required fields are empty
+        if (dayNumbers.length === 0 || dates.length === 0 || days.length === 0 || startTimes.length === 0 || endTimes.length === 0 || activities.length === 0) {
+            showModal("Please fill up all the required fields.", true); // Show error modal
+            return; // Prevent form submission
+        }
     
         // Add hidden inputs for day data before submitting the form
         dayNumbers.forEach(function (value, index) {
@@ -339,6 +417,17 @@ document.addEventListener("DOMContentLoaded", function () {
     // Add event listeners
     startDateInput.addEventListener("change", updateDuration);
     endDateInput.addEventListener("change", updateDuration);
+
+    // Add event listener to validate all fields on input change
+    document.querySelectorAll("#itinerary-form [required]").forEach(field => {
+        field.addEventListener("input", () => {
+            if (validateAllFields() && validateAllActivities() && validateAllTimeSlots() && hasAddedTimeSlot()) {
+                document.querySelector('.add-itinerary-btn').style.display = 'inline-block';
+            } else {
+                document.querySelector('.add-itinerary-btn').style.display = 'none';
+            }
+        });
+    });
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -459,9 +548,22 @@ document.addEventListener("DOMContentLoaded", () => {
         const isLodgingValid = validateLodging();
         const isClientNameValid = validateClientName(); // Add validation for Client's Name
 
+        // Validate all required fields
+        const requiredFields = document.querySelectorAll("#itinerary-form [required]");
+        let allFieldsValid = true;
+        requiredFields.forEach(field => {
+            if (!field.value.trim()) {
+                allFieldsValid = false;
+                field.classList.add("error"); // Add error class to highlight the field
+            } else {
+                field.classList.remove("error"); // Remove error class if field is valid
+            }
+        });
+
         // If any validation fails, prevent form submission
-        if (!isDestinationValid || !isLodgingValid || !isClientNameValid) {
+        if (!isDestinationValid || !isLodgingValid || !isClientNameValid || !allFieldsValid) {
             event.preventDefault(); // Prevent form submission
+            showModal("Please fill up all the required fields.", true); // Show error modal
             console.log("Form submission prevented due to invalid inputs.");
         } else {
             console.log("Form submitted successfully.");
